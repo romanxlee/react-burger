@@ -38,5 +38,4 @@
 .scrollable {
     max-height: 100vh;
     overflow: scroll;
-    scrollbar-color: #8585AD #2F2F37;
 }
