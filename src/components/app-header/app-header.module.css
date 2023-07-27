@@ -1,0 +1,27 @@
+.header {
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo {
+    justify-content: center;
+}
+
+.lastLink {
+    composes: link;
+    justify-content: flex-end;
+}
+
+.flexBasis {
+    flex-basis: 33.333%;
+}
