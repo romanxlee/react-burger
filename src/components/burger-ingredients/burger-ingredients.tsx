@@ -32,7 +32,7 @@ const BurgerIngredients = () => {
                             BUNS.map(bun => (
                                 <div key={bun._id} className={BurgerIngredientsStyles.card}>
                                     <Counter count={1} size="default" extraClass="m-1"/>
-                                    <img src={bun.image} alt="Картинка ингридиента"
+                                    <img src={bun.image} alt={`Изображение ${bun.name}`}
                                          className={BurgerIngredientsStyles.cardImage}/>
                                     <div className={BurgerIngredientsStyles.price}>
                                         <span className="text text_type_digits-default mr-2">{bun.price}</span>
@@ -54,7 +54,7 @@ const BurgerIngredients = () => {
                             SAUCES.map(sauce => (
                                 <div key={sauce._id} className={BurgerIngredientsStyles.card}>
                                     <Counter count={1} size="default" extraClass="m-1"/>
-                                    <img src={sauce.image} alt="Картинка ингридиента"
+                                    <img src={sauce.image} alt={`Изображение ${sauce.name}`}
                                          className={BurgerIngredientsStyles.cardImage}/>
                                     <div className={BurgerIngredientsStyles.price}>
                                         <span className="text text_type_digits-default mr-2">{sauce.price}</span>
@@ -76,7 +76,7 @@ const BurgerIngredients = () => {
                             MAINS.map(main => (
                                 <div key={main._id} className={BurgerIngredientsStyles.card}>
                                     <Counter count={1} size="default" extraClass="m-1"/>
-                                    <img src={main.image} alt="Картинка ингридиента"
+                                    <img src={main.image} alt={`Изображение ${main.name}`}
                                          className={BurgerIngredientsStyles.cardImage}/>
                                     <div className={BurgerIngredientsStyles.price}>
                                         <span className="text text_type_digits-default mr-2">{main.price}</span>
