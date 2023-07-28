@@ -15,8 +15,8 @@ const BurgerIngredients = () => {
 
     return (
         <div>
-            <h3 className="text text_type_main-medium">Соберите бургер</h3>
-            <div className={BurgerIngredientsStyles.tabs}>
+            <h3 className="text text_type_main-medium mt-10 mb-5">Соберите бургер</h3>
+            <div className={`${BurgerIngredientsStyles.tabs} mb-10`}>
                 {
                     TABS.map((tab) => (
                         <Tab active={current === tab} value={tab} key={tab} onClick={setCurrent}>

@@ -1,13 +1,44 @@
 import data from "../../utils/data";
-import { ConstructorElement, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorElement, CurrencyIcon, Button, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerConstructorStyles from './burger-constructor.module.css';
 
 const BurgerConstructor = () => {
+    const BUN = data.filter(item => item.type === 'bun')[0]
+    const INGREDIENTS = data.filter(item => item.type !== 'bun')
     return (
         <div className={BurgerConstructorStyles.container}>
-            {data.map((item, index) => (
-                <ConstructorElement key={item._id} type={index === 0 ? 'top' : index === data.length - 1 ? 'bottom' : undefined} text={item.name} thumbnail={item.image} price={item.price} />
-            ))}
+            <div className={BurgerConstructorStyles.item}>
+                <div className={BurgerConstructorStyles.blank} />
+                <ConstructorElement
+                    type="top"
+                    text={`${BUN.name} (верх)`}
+                    thumbnail={BUN.image}
+                    price={BUN.price}
+                    isLocked={true}
+                />
+            </div>
+            <div className={BurgerConstructorStyles.ingredients}>{INGREDIENTS.map((item) => (
+                <div key={item._id} className={BurgerConstructorStyles.item}>
+                    <div className={BurgerConstructorStyles.drag}>
+                        <DragIcon type="primary"/>
+                    </div>
+                    <ConstructorElement
+                        text={item.name}
+                        thumbnail={item.image}
+                        price={item.price}
+                    />
+                </div>
+            ))}</div>
+            <div className={BurgerConstructorStyles.item}>
+                <div className={BurgerConstructorStyles.blank} />
+                <ConstructorElement
+                    type="bottom"
+                    text={`${BUN.name} (низ)`}
+                    thumbnail={BUN.image}
+                    price={BUN.price}
+                    isLocked={true}
+                />
+            </div>
             <div className={BurgerConstructorStyles.order}>
                 <div className={BurgerConstructorStyles.price}>
                     <span className="text text_type_digits-default">610</span>

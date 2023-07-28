@@ -4,9 +4,26 @@
     gap: 16px;
 
     margin-top: 100px;
+}
 
+.ingredients {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     max-height: 100vh;
-    overflow: scroll;
+    overflow-y: scroll;
+}
+
+.ingredients::-webkit-scrollbar {
+    width: 8px;
+}
+
+.ingredients::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+.ingredients::-webkit-scrollbar-thumb {
+    background: #8585AD;
 }
 
 .order {
@@ -22,4 +39,18 @@
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    padding-right: 8px;
+}
+
+.blank {
+    width: 32px;
+}
+
+.drag {
+    margin-right: 8px;
 }

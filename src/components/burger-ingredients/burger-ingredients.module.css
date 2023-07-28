@@ -37,5 +37,17 @@
 
 .scrollable {
     max-height: 100vh;
-    overflow: scroll;
+    overflow-y: scroll;
+}
+
+.scrollable::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+    background: #8585AD;
 }
