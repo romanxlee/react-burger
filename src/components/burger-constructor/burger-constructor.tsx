@@ -1,10 +1,15 @@
-import data from "../../utils/data";
+import { type FC } from "react";
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerConstructorStyles from './burger-constructor.module.css';
+import type { Ingredient } from "../../types";
 
-const BurgerConstructor = () => {
-    const BUN = data.filter(item => item.type === 'bun')[0]
-    const INGREDIENTS = data.filter(item => item.type !== 'bun')
+type Props = {
+    ingredients: Ingredient[]
+}
+
+const BurgerConstructor:FC<Props> = (props) => {
+    const BUN = props.ingredients.filter(item => item.type === 'bun')[0]
+    const INGREDIENTS = props.ingredients.filter(item => item.type !== 'bun')
     return (
         <div className={BurgerConstructorStyles.container}>
             <div className={BurgerConstructorStyles.item}>

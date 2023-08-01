@@ -1,17 +1,20 @@
-import { useState } from "react";
+import { useState, type FC } from "react";
 import BurgerIngredientsStyles from "./burger-ingredients.module.css"
 import { Tab, CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components"
-import data from "../../utils/data";
+import type { Ingredient } from "../../types";
 
 const TABS = ["Булки", "Соусы", "Начинки"]
 
-const BUNS = data.filter(item => item.type === 'bun')
-const SAUCES = data.filter(item => item.type === 'sauce')
-const MAINS = data.filter(item => item.type === 'main')
+type Props = {
+    ingredients: Ingredient[]
+}
 
-const BurgerIngredients = () => {
-
+const BurgerIngredients:FC<Props> = (props) => {
     const [current, setCurrent] = useState("Булки")
+
+    const BUNS = props.ingredients.filter(item => item.type === 'bun')
+    const SAUCES = props.ingredients.filter(item => item.type === 'sauce')
+    const MAINS = props.ingredients.filter(item => item.type === 'main')
 
     return (
         <div>
