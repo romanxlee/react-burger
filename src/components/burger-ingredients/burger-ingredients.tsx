@@ -7,6 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import type { Ingredient } from "../../types";
 import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 const TABS = ["Булки", "Соусы", "Начинки"];
 
@@ -143,50 +144,7 @@ const BurgerIngredients: FC<Props> = (props) => {
       <Modal
         show={modalVisible}
         title="Детали ингредиента"
-        content={
-          <>
-            <img
-              src={choose.image}
-              alt={`Изображение ${choose.name}`}
-              className={BurgerIngredientsStyles.modalImage}
-            />
-            <span className="text text_type_main-medium mt-4 mb-8">
-              {choose.name}
-            </span>
-            <div className={BurgerIngredientsStyles.modalDetails}>
-              <div
-                className={`${BurgerIngredientsStyles.modalValue} text text_color_inactive`}
-              >
-                <span className="text_type_main-small">Калории,ккал</span>
-                <span className="text_type_digits-default">
-                  {choose.calories}
-                </span>
-              </div>
-              <div
-                className={`${BurgerIngredientsStyles.modalValue} text text_color_inactive`}
-              >
-                <span className="text_type_main-small">Белки, г</span>
-                <span className="text_type_digits-default">
-                  {choose.proteins}
-                </span>
-              </div>
-              <div
-                className={`${BurgerIngredientsStyles.modalValue} text text_color_inactive`}
-              >
-                <span className="text_type_main-small">Жиры, г</span>
-                <span className="text_type_digits-default">{choose.fat}</span>
-              </div>
-              <div
-                className={`${BurgerIngredientsStyles.modalValue} text text_color_inactive`}
-              >
-                <span className="text_type_main-small">Углеводы, г</span>
-                <span className="text_type_digits-default">
-                  {choose.carbohydrates}
-                </span>
-              </div>
-            </div>
-          </>
-        }
+        content={<IngredientDetails ingredient={choose} />}
       />
     </div>
   );
