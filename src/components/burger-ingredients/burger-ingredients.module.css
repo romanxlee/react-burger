@@ -7,6 +7,7 @@
     flex-direction: column;
     align-items: center;
     position: relative;
+    cursor: pointer;
 }
 
 .cardImage {
@@ -50,4 +51,21 @@
 
 .scrollable::-webkit-scrollbar-thumb {
     background: #8585AD;
+}
+
+.modalImage {
+    width: 480px;
+    height: 240px;
+}
+
+.modalDetails {
+    display: flex;
+    gap: 20px;
+}
+
+.modalValue {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    align-items: center;
 }

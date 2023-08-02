@@ -5,8 +5,6 @@ import AppStyles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import ModalOverlay from "../modal-overlay/modal-overlay";
-import Modal from "../modal/modal";
 
 import type { Ingredient } from "../../types";
 
@@ -29,7 +27,7 @@ function App() {
   }, []);
 
   return (
-    <div className={AppStyles.app}>
+    <div id="app" className={AppStyles.app}>
       <AppHeader />
       {data.length > 0 && (
         <main className={AppStyles.main}>
@@ -37,7 +35,6 @@ function App() {
           <BurgerConstructor ingredients={data} />
         </main>
       )}
-      <Modal show={true} />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import type { Ingredient } from "../../types";
+import Modal from "../modal/modal";
 
 const TABS = ["Булки", "Соусы", "Начинки"];
 
@@ -15,10 +16,17 @@ type Props = {
 
 const BurgerIngredients: FC<Props> = (props) => {
   const [current, setCurrent] = useState("Булки");
+  const [choose, setChoose] = useState({} as Ingredient);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const BUNS = props.ingredients.filter((item) => item.type === "bun");
   const SAUCES = props.ingredients.filter((item) => item.type === "sauce");
   const MAINS = props.ingredients.filter((item) => item.type === "main");
+
+  const handleClick = (value: Ingredient) => {
+    setModalVisible(true);
+    setChoose(value);
+  };
 
   return (
     <div>
@@ -40,7 +48,11 @@ const BurgerIngredients: FC<Props> = (props) => {
           <h4 className="text text_type_main-medium">Булки</h4>
           <div className={BurgerIngredientsStyles.container}>
             {BUNS.map((bun) => (
-              <div key={bun._id} className={BurgerIngredientsStyles.card}>
+              <div
+                key={bun._id}
+                className={BurgerIngredientsStyles.card}
+                onClick={() => handleClick(bun)}
+              >
                 <Counter count={1} size="default" extraClass="m-1" />
                 <img
                   src={bun.image}
@@ -68,7 +80,11 @@ const BurgerIngredients: FC<Props> = (props) => {
           <h4 className="text text_type_main-medium">Соусы</h4>
           <div className={BurgerIngredientsStyles.container}>
             {SAUCES.map((sauce) => (
-              <div key={sauce._id} className={BurgerIngredientsStyles.card}>
+              <div
+                key={sauce._id}
+                className={BurgerIngredientsStyles.card}
+                onClick={() => handleClick(sauce)}
+              >
                 <Counter count={1} size="default" extraClass="m-1" />
                 <img
                   src={sauce.image}
@@ -96,7 +112,11 @@ const BurgerIngredients: FC<Props> = (props) => {
           <h4 className="text text_type_main-medium">Начинки</h4>
           <div className={BurgerIngredientsStyles.container}>
             {MAINS.map((main) => (
-              <div key={main._id} className={BurgerIngredientsStyles.card}>
+              <div
+                key={main._id}
+                className={BurgerIngredientsStyles.card}
+                onClick={() => handleClick(main)}
+              >
                 <Counter count={1} size="default" extraClass="m-1" />
                 <img
                   src={main.image}
@@ -120,6 +140,54 @@ const BurgerIngredients: FC<Props> = (props) => {
           </div>
         </section>
       </div>
+      <Modal
+        show={modalVisible}
+        title="Детали ингредиента"
+        content={
+          <>
+            <img
+              src={choose.image}
+              alt={`Изображение ${choose.name}`}
+              className={BurgerIngredientsStyles.modalImage}
+            />
+            <span className="text text_type_main-medium mt-4 mb-8">
+              {choose.name}
+            </span>
+            <div className={BurgerIngredientsStyles.modalDetails}>
+              <div
+                className={`${BurgerIngredientsStyles.modalValue} text text_color_inactive`}
+              >
+                <span className="text_type_main-small">Калории,ккал</span>
+                <span className="text_type_digits-default">
+                  {choose.calories}
+                </span>
+              </div>
+              <div
+                className={`${BurgerIngredientsStyles.modalValue} text text_color_inactive`}
+              >
+                <span className="text_type_main-small">Белки, г</span>
+                <span className="text_type_digits-default">
+                  {choose.proteins}
+                </span>
+              </div>
+              <div
+                className={`${BurgerIngredientsStyles.modalValue} text text_color_inactive`}
+              >
+                <span className="text_type_main-small">Жиры, г</span>
+                <span className="text_type_digits-default">{choose.fat}</span>
+              </div>
+              <div
+                className={`${BurgerIngredientsStyles.modalValue} text text_color_inactive`}
+              >
+                <span className="text_type_main-small">Углеводы, г</span>
+                <span className="text_type_digits-default">
+                  {choose.carbohydrates}
+                </span>
+              </div>
+            </div>
+          </>
+        }
+      />
     </div>
   );
 };
