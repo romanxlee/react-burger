@@ -74,7 +74,7 @@ const BurgerConstructor: FC<Props> = (props) => {
       <Modal
         show={modalVisible}
         onClose={() => setModalVisible(false)}
-        content={<OrderDetails orderNumber="034536" />}
+        children={<OrderDetails orderNumber="034536" />}
       />
     </div>
   );

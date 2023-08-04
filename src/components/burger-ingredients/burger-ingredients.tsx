@@ -145,7 +145,7 @@ const BurgerIngredients: FC<Props> = (props) => {
         show={modalVisible}
         title="Детали ингредиента"
         onClose={() => setModalVisible(false)}
-        content={<IngredientDetails ingredient={choose} />}
+        children={<IngredientDetails ingredient={choose} />}
       />
     </div>
   );
