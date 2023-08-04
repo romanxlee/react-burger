@@ -7,11 +7,11 @@ import { createPortal } from "react-dom";
 type Props = {
   show: boolean;
   title?: string;
-  content: ReactNode;
+  children: ReactNode;
   onClose: () => void;
 };
 
-const Modal: FC<Props> = ({ show, title, content, onClose }) => {
+const Modal: FC<Props> = ({ show, title, children, onClose }) => {
   useEffect(() => {
     function onKeydown(event: KeyboardEvent) {
       if (event.key === "Escape") {
@@ -29,7 +29,7 @@ const Modal: FC<Props> = ({ show, title, content, onClose }) => {
         <ModalOverlay
           show={show}
           onClick={() => onClose()}
-          content={
+          children={
             <div className={ModalStyles.modal}>
               <div className={ModalStyles.title}>
                 <span className="text text_type_main-large">{title}</span>
@@ -37,7 +37,7 @@ const Modal: FC<Props> = ({ show, title, content, onClose }) => {
                   <CloseIcon type={"primary"} onClick={() => onClose()} />
                 </div>
               </div>
-              <div className={ModalStyles.content}>{content}</div>
+              <div className={ModalStyles.content}>{children}</div>
             </div>
           }
         ></ModalOverlay>,
