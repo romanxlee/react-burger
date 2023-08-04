@@ -1,4 +1,4 @@
-import { type FC, ReactNode, MouseEventHandler } from "react";
+import { type FC, ReactNode, MouseEventHandler, MouseEvent } from "react";
 import ModalOverlayStyles from "./modal-overlay.module.css";
 
 type Props = {
@@ -8,14 +8,19 @@ type Props = {
 };
 
 const ModalOverlay: FC<Props> = ({ content, show, onClick }) => {
+  if (!show) return null;
+
+  const onContainerClick = (event: MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+  };
+
   return (
-    <>
-      {show && (
-        <div className={ModalOverlayStyles.overlay} onClick={onClick}>
-          {content}
-        </div>
-      )}
-    </>
+    <div
+      className={ModalOverlayStyles.overlay}
+      onClick={(event) => onClick(event)}
+    >
+      <div onClick={onContainerClick}>{content}</div>
+    </div>
   );
 };
 

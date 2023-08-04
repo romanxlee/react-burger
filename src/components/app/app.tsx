@@ -15,7 +15,6 @@ function App() {
       await fetch("https://norma.nomoreparties.space/api/ingredients")
         .then((res) => res.json())
         .then((res) => {
-          console.log(res.data);
           setData(res.data);
         });
     } catch (error) {
