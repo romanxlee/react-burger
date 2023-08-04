@@ -8,6 +8,7 @@ import {
 import type { Ingredient } from "../../types";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import { useModal } from "../../hooks/useModal";
 
 const TABS = ["Булки", "Соусы", "Начинки"];
 
@@ -18,14 +19,15 @@ type Props = {
 const BurgerIngredients: FC<Props> = (props) => {
   const [current, setCurrent] = useState("Булки");
   const [choose, setChoose] = useState({} as Ingredient);
-  const [modalVisible, setModalVisible] = useState(false);
+
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const BUNS = props.ingredients.filter((item) => item.type === "bun");
   const SAUCES = props.ingredients.filter((item) => item.type === "sauce");
   const MAINS = props.ingredients.filter((item) => item.type === "main");
 
   const handleClick = (value: Ingredient) => {
-    setModalVisible(true);
+    openModal();
     setChoose(value);
   };
 
@@ -141,12 +143,13 @@ const BurgerIngredients: FC<Props> = (props) => {
           </div>
         </section>
       </div>
-      <Modal
-        show={modalVisible}
-        title="Детали ингредиента"
-        onClose={() => setModalVisible(false)}
-        children={<IngredientDetails ingredient={choose} />}
-      />
+      {isModalOpen && (
+        <Modal
+          title="Детали ингредиента"
+          onClose={closeModal}
+          children={<IngredientDetails ingredient={choose} />}
+        />
+      )}
     </div>
   );
 };

@@ -10,23 +10,25 @@ import type { Ingredient } from "../../types";
 
 function App() {
   const [data, setData] = useState<Ingredient[]>([]);
-  const fetchData = async () => {
-    try {
-      await fetch("https://norma.nomoreparties.space/api/ingredients")
-        .then((res) => res.json())
-        .then((res) => {
-          setData(res.data);
-        });
-    } catch (error) {
-      console.log(error);
-    }
+  const fetchData = () => {
+    fetch("https://norma.nomoreparties.space/api/ingredients")
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка ${res.status}`);
+      })
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch(console.error);
   };
   useEffect(() => {
     fetchData();
   }, []);
 
   return (
-    <div id="app" className={AppStyles.app}>
+    <div className={AppStyles.app}>
       <AppHeader />
       {data.length > 0 && (
         <main className={AppStyles.main}>

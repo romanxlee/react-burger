@@ -1,4 +1,4 @@
-import { type FC, useState } from "react";
+import { type FC } from "react";
 import {
   ConstructorElement,
   CurrencyIcon,
@@ -9,13 +9,14 @@ import BurgerConstructorStyles from "./burger-constructor.module.css";
 import type { Ingredient } from "../../types";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
+import { useModal } from "../../hooks/useModal";
 
 type Props = {
   ingredients: Ingredient[];
 };
 
 const BurgerConstructor: FC<Props> = (props) => {
-  const [modalVisible, setModalVisible] = useState(false);
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const BUN = props.ingredients.filter((item) => item.type === "bun")[0];
   const INGREDIENTS = props.ingredients.filter((item) => item.type !== "bun");
@@ -65,17 +66,18 @@ const BurgerConstructor: FC<Props> = (props) => {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={() => setModalVisible(true)}
+          onClick={openModal}
         >
           Оформить заказ
         </Button>
       </div>
 
-      <Modal
-        show={modalVisible}
-        onClose={() => setModalVisible(false)}
-        children={<OrderDetails orderNumber="034536" />}
-      />
+      {isModalOpen && (
+        <Modal
+          onClose={closeModal}
+          children={<OrderDetails orderNumber="034536" />}
+        />
+      )}
     </div>
   );
 };

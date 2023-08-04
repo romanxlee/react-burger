@@ -5,13 +5,12 @@ import { type FC, ReactNode, useEffect } from "react";
 import { createPortal } from "react-dom";
 
 type Props = {
-  show: boolean;
   title?: string;
   children: ReactNode;
   onClose: () => void;
 };
 
-const Modal: FC<Props> = ({ show, title, children, onClose }) => {
+const Modal: FC<Props> = ({ title, children, onClose }) => {
   useEffect(() => {
     function onKeydown(event: KeyboardEvent) {
       if (event.key === "Escape") {
@@ -27,21 +26,20 @@ const Modal: FC<Props> = ({ show, title, children, onClose }) => {
     <>
       {createPortal(
         <ModalOverlay
-          show={show}
-          onClick={() => onClose()}
+          onClick={onClose}
           children={
             <div className={ModalStyles.modal}>
               <div className={ModalStyles.title}>
                 <span className="text text_type_main-large">{title}</span>
                 <div className={ModalStyles.close}>
-                  <CloseIcon type={"primary"} onClick={() => onClose()} />
+                  <CloseIcon type={"primary"} onClick={onClose} />
                 </div>
               </div>
               <div className={ModalStyles.content}>{children}</div>
             </div>
           }
         ></ModalOverlay>,
-        document.getElementById("app") as HTMLElement,
+        document.getElementById("modals") as HTMLElement,
       )}
     </>
   );
