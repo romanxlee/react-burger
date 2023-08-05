@@ -1,0 +1,16 @@
+.image {
+    width: 480px;
+    height: 240px;
+}
+
+.details {
+    display: flex;
+    gap: 20px;
+}
+
+.value {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    align-items: center;
+}
