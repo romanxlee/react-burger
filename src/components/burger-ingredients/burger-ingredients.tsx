@@ -8,7 +8,7 @@ import {
 import type { Ingredient } from "../../types";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { useModal } from "../../hooks/useModal";
+import { useModal } from "../../hooks";
 
 const TABS = ["Булки", "Соусы", "Начинки"];
 

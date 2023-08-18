@@ -9,7 +9,7 @@ import BurgerConstructorStyles from "./burger-constructor.module.css";
 import type { Ingredient } from "../../types";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { useModal } from "../../hooks/useModal";
+import { useModal } from "../../hooks";
 
 type Props = {
   ingredients: Ingredient[];
