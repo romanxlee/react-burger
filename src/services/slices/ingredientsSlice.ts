@@ -1,17 +1,19 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { fetchIngredients } from "../api";
 import type { Ingredient } from "../../types";
 import type { RootState } from "./index";
 
 type IngredientsState = {
     ingredients: Ingredient[],
+    chosenIngredients: Ingredient[],
     status: 'idle' | 'loading' | 'succeeded' | 'failed',
     error?: string
 }
 
 const initialState: IngredientsState = {
     ingredients: [],
-    status: 'idle'
+    chosenIngredients: [],
+    status: 'idle',
 };
 
 export const fetchIngredientsAsync = createAsyncThunk(
@@ -24,7 +26,11 @@ export const fetchIngredientsAsync = createAsyncThunk(
 const ingredientsSlice = createSlice({
     name: 'ingredients',
     initialState,
-    reducers: {},
+    reducers: {
+        keepIngredient: (state, action: PayloadAction<Ingredient>) => {
+            state.chosenIngredients.push(action.payload);
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchIngredientsAsync.pending, (state) => {
@@ -41,6 +47,10 @@ const ingredientsSlice = createSlice({
     }
 });
 
+export const { keepIngredient } = ingredientsSlice.actions;
+
 export const selectIngredients = (state: RootState) => state.ingredients.ingredients;
+export const chosenIngredients = (state: RootState) => state.ingredients.chosenIngredients;
+export const selectChosenIngredients = (state: RootState) => state.ingredients.chosenIngredients;
 
 export default ingredientsSlice.reducer;

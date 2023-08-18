@@ -8,12 +8,13 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 
 import { useAppSelector, useAppDispatch } from "../../hooks";
 
-import { fetchIngredientsAsync, selectIngredients } from "../../services/slices/ingredientsSlice";
+import { fetchIngredientsAsync, selectIngredients, chosenIngredients } from "../../services/slices/ingredientsSlice";
 
 function App() {
     const dispatch = useAppDispatch();
 
     const ingredients = useAppSelector(selectIngredients);
+    const constructorIngredients = useAppSelector(chosenIngredients)
     const status = useAppSelector((state) => state.ingredients.status);
     const error = useAppSelector((state) => state.ingredients.error);
 
