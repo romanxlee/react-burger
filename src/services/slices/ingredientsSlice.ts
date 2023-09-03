@@ -30,6 +30,9 @@ const ingredientsSlice = createSlice({
         keepIngredient: (state, action: PayloadAction<Ingredient>) => {
             state.chosenIngredients.push(action.payload);
         },
+        deleteIngredient: (state, action: PayloadAction<Ingredient>) => {
+            state.chosenIngredients.filter(ingredient => ingredient.id !== action.payload.id)
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -47,7 +50,7 @@ const ingredientsSlice = createSlice({
     }
 });
 
-export const { keepIngredient } = ingredientsSlice.actions;
+export const { keepIngredient, deleteIngredient } = ingredientsSlice.actions;
 
 export const selectIngredients = (state: RootState) => state.ingredients.ingredients;
 export const chosenIngredients = (state: RootState) => state.ingredients.chosenIngredients;

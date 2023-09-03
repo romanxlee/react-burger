@@ -10,6 +10,9 @@ import { useAppSelector, useAppDispatch } from "../../hooks";
 
 import { fetchIngredientsAsync, selectIngredients, chosenIngredients } from "../../services/slices/ingredientsSlice";
 
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
 function App() {
     const dispatch = useAppDispatch();
 
@@ -31,12 +34,12 @@ function App() {
   return (
     <div className={AppStyles.app}>
       <AppHeader />
-        {ingredients.length && (
             <main className={AppStyles.main}>
-                <BurgerIngredients ingredients={ingredients}/>
-                <BurgerConstructor ingredients={ingredients}/>
+                <DndProvider backend={HTML5Backend}>
+                    {ingredients.length && <BurgerIngredients ingredients={ingredients}/>}
+                    <BurgerConstructor ingredients={constructorIngredients}/>
+                </DndProvider>
             </main>
-        )}
     </div>
   );
 }
