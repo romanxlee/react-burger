@@ -6,6 +6,9 @@ import { v4 as uuid } from 'uuid';
 import type { Ingredient } from "../../types";
 import { useDrag, useDrop } from "react-dnd";
 
+import { deleteIngredient } from "../../services/slices/ingredientsSlice";
+import { useAppDispatch } from "../../hooks";
+
 type Props = {
     ingredient: Ingredient
     moveIngredient: (index: number, overIndex: number) => void;
@@ -16,6 +19,8 @@ const ConstructorItem:FC<Props> = ({ ingredient, moveIngredient, index }) => {
     const type = `constructorItem:${ingredient._id}`;
 
     const item = uuid();
+
+    const dispatch = useAppDispatch();
 
     const [, drag] = useDrag({
         type: "ITEM",
@@ -45,6 +50,7 @@ const ConstructorItem:FC<Props> = ({ ingredient, moveIngredient, index }) => {
                 text={ingredient.name}
                 thumbnail={ingredient.image}
                 price={ingredient.price}
+                handleClose={() => dispatch(deleteIngredient(ingredient))}
             />
         </div>
     )

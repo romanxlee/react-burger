@@ -31,7 +31,7 @@ const ingredientsSlice = createSlice({
             state.chosenIngredients.push(action.payload);
         },
         deleteIngredient: (state, action: PayloadAction<Ingredient>) => {
-            state.chosenIngredients.filter(ingredient => ingredient.id !== action.payload.id)
+            state.chosenIngredients = state.chosenIngredients.filter(ingredient => ingredient.id !== action.payload.id)
         }
     },
     extraReducers: (builder) => {
