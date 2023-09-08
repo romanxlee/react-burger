@@ -8,7 +8,7 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 
 import { useAppSelector, useAppDispatch } from "../../hooks";
 
-import { fetchIngredientsAsync, selectIngredients, chosenIngredients } from "../../services/slices/ingredientsSlice";
+import { fetchIngredientsAsync, selectIngredients } from "../../services/slices/ingredientsSlice";
 
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -17,7 +17,6 @@ function App() {
     const dispatch = useAppDispatch();
 
     const ingredients = useAppSelector(selectIngredients);
-    const constructorIngredients = useAppSelector(chosenIngredients)
     const status = useAppSelector((state) => state.ingredients.status);
     const error = useAppSelector((state) => state.ingredients.error);
 
@@ -37,7 +36,7 @@ function App() {
             <main className={AppStyles.main}>
                 <DndProvider backend={HTML5Backend}>
                     {ingredients.length && <BurgerIngredients ingredients={ingredients}/>}
-                    <BurgerConstructor ingredients={constructorIngredients}/>
+                    <BurgerConstructor />
                 </DndProvider>
             </main>
     </div>

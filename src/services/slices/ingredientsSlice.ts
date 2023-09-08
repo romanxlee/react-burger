@@ -5,6 +5,7 @@ import type { RootState } from "./index";
 
 type IngredientsState = {
     ingredients: Ingredient[],
+    chosenBun: Ingredient | null,
     chosenIngredients: Ingredient[],
     status: 'idle' | 'loading' | 'succeeded' | 'failed',
     error?: string
@@ -12,6 +13,7 @@ type IngredientsState = {
 
 const initialState: IngredientsState = {
     ingredients: [],
+    chosenBun: null,
     chosenIngredients: [],
     status: 'idle',
 };
@@ -27,11 +29,18 @@ const ingredientsSlice = createSlice({
     name: 'ingredients',
     initialState,
     reducers: {
+        keepBun: (state, action: PayloadAction<Ingredient>) => {
+            state.chosenBun = action.payload;
+        },
         keepIngredient: (state, action: PayloadAction<Ingredient>) => {
             state.chosenIngredients.push(action.payload);
         },
         deleteIngredient: (state, action: PayloadAction<Ingredient>) => {
             state.chosenIngredients = state.chosenIngredients.filter(ingredient => ingredient.id !== action.payload.id)
+        },
+        reorderIngredient: (state, action) => {
+            const item = state.chosenIngredients.splice(action.payload.from, 1)[0];
+            state.chosenIngredients.splice(action.payload.to, 0, item);
         }
     },
     extraReducers: (builder) => {
@@ -50,10 +59,10 @@ const ingredientsSlice = createSlice({
     }
 });
 
-export const { keepIngredient, deleteIngredient } = ingredientsSlice.actions;
+export const { keepIngredient, keepBun, deleteIngredient, reorderIngredient } = ingredientsSlice.actions;
 
 export const selectIngredients = (state: RootState) => state.ingredients.ingredients;
 export const chosenIngredients = (state: RootState) => state.ingredients.chosenIngredients;
-export const selectChosenIngredients = (state: RootState) => state.ingredients.chosenIngredients;
+export const chosenBun = (state: RootState) => state.ingredients.chosenBun;
 
 export default ingredientsSlice.reducer;
