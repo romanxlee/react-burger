@@ -1,4 +1,3 @@
-import { type FC, useCallback } from "react";
 import {
   ConstructorElement,
   CurrencyIcon,

@@ -1,4 +1,4 @@
-import { useState, type FC } from "react";
+import { useState, type FC, useEffect, useRef } from "react";
 import BurgerIngredientsStyles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import type { Ingredient } from "../../types";
@@ -28,6 +28,30 @@ const BurgerIngredients: FC<Props> = (props) => {
     setChoose(value);
   };
 
+  const handleScroll = () => {
+    const ingredientSections = document.querySelectorAll('section');
+    let closestIndex = -1;
+    let closestDistance = Infinity;
+    ingredientSections.forEach((section, index) => {
+      const rect = section.getBoundingClientRect()
+      const distance = ((rect.top) * (rect.top) + rect.left * rect.left);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    })
+
+    setCurrent(TABS[closestIndex]);
+  }
+
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.addEventListener('scroll', handleScroll);
+    }
+  }, [])
+
   return (
     <div>
       <h3 className="text text_type_main-medium mt-10 mb-5">Соберите бургер</h3>
@@ -43,7 +67,7 @@ const BurgerIngredients: FC<Props> = (props) => {
           </Tab>
         ))}
       </div>
-      <div className={BurgerIngredientsStyles.scrollable}>
+      <div ref={containerRef} className={BurgerIngredientsStyles.scrollable}>
         <section className={BurgerIngredientsStyles.section}>
           <h4 className="text text_type_main-medium">Булки</h4>
           <div className={BurgerIngredientsStyles.container}>
