@@ -4,6 +4,7 @@ import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burg
 
 import type { Ingredient } from "../../types";
 import { useDrag, useDrop } from "react-dnd";
+import type { Identifier } from 'dnd-core'
 
 import { deleteIngredient, reorderIngredient } from "../../services/slices/ingredientsSlice";
 import { useAppDispatch } from "../../hooks";
@@ -13,19 +14,29 @@ type Props = {
     index: number
 }
 
+type DragItem = {
+    index: number
+    id: string
+    type: string
+}
+
 const ConstructorItem:FC<Props> = ({ ingredient, index }) => {
 
     const dispatch = useAppDispatch();
-    const ref = useRef(null);
+    const ref = useRef<HTMLDivElement>(null);
 
-    const [{ handlerId }, drop] = useDrop({
-        accept: ["post"],
+    const [{ handlerId }, drop] = useDrop<
+        DragItem,
+        void,
+        { handlerId: Identifier | null }
+    >({
+        accept: ["constructor-ingredient"],
         collect(monitor) {
             return {
                 handlerId: monitor.getHandlerId()
             };
         },
-        hover(item, monitor) {
+        hover(item: DragItem, monitor) {
             if (!ref.current) {
                 return;
             }
@@ -40,7 +51,7 @@ const ConstructorItem:FC<Props> = ({ ingredient, index }) => {
             const hoverMiddleY =
                 (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
             const clientOffset = monitor.getClientOffset();
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+            const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
 
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
                 return;
@@ -56,9 +67,9 @@ const ConstructorItem:FC<Props> = ({ ingredient, index }) => {
         }
     });
     const [{ isDragging }, drag] = useDrag({
-        type: "post",
+        type: "constructor-ingredient",
         item: () => {
-            return { index };
+            return { ingredient, index };
         },
         collect: (monitor) => ({
             isDragging: monitor.isDragging()
