@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   ConstructorElement,
   CurrencyIcon,
@@ -34,6 +35,18 @@ const BurgerConstructor = () => {
         }),
     })
 
+    const totalSum = useMemo(() => {
+        let sum = 0
+
+        if (bun) sum += bun.price * 2;
+
+        if (mainIngredients.length) {
+            mainIngredients.forEach(ingredient => sum += ingredient.price)
+        }
+
+        return sum;
+    }, [bun, mainIngredients])
+
   return (
     <div className={BurgerConstructorStyles.container} ref={drop}>
             {bun && <div className={BurgerConstructorStyles.item}>
@@ -63,7 +76,7 @@ const BurgerConstructor = () => {
             </div>}
       <div className={BurgerConstructorStyles.order}>
         <div className={BurgerConstructorStyles.price}>
-          <span className="text text_type_digits-default">610</span>
+          <span className="text text_type_digits-default">{totalSum}</span>
           <CurrencyIcon type="primary" />
         </div>
         <Button
