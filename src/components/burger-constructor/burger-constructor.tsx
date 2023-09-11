@@ -8,12 +8,13 @@ import BurgerConstructorStyles from "./burger-constructor.module.css";
 import type { Ingredient } from "../../types";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import {useAppDispatch, useAppSelector, useModal} from "../../hooks";
+import { useAppDispatch, useAppSelector, useModal } from "../../hooks";
 import ConstructorItem from "../constructor-item/constructor-item";
 
 import { useDrop } from 'react-dnd'
 
-import {keepIngredient, keepBun, chosenIngredients, chosenBun } from "../../services/slices/ingredientsSlice";
+import { keepIngredient, keepBun, chosenIngredients, chosenBun } from "../../services/slices/ingredientsSlice";
+import { fetchOrder } from "../../services/slices/orderSlice";
 
 import { v4 as uuid } from 'uuid';
 
@@ -46,6 +47,27 @@ const BurgerConstructor = () => {
 
         return sum;
     }, [bun, mainIngredients])
+
+    const ingredientsId = useMemo(() => {
+        let ids: string[] = []
+
+        if (bun) ids.push(bun._id)
+
+        if (mainIngredients.length) {
+            const mainIds = mainIngredients.map(item => {
+                return item._id
+            })
+
+            ids = [...mainIds, ...ids]
+        }
+
+        return ids
+    }, [bun, mainIngredients])
+
+    const sendOrder = async () => {
+        openModal()
+        dispatch(fetchOrder(ingredientsId))
+    }
 
   return (
     <div className={BurgerConstructorStyles.container} ref={drop}>
@@ -83,7 +105,7 @@ const BurgerConstructor = () => {
           htmlType="button"
           type="primary"
           size="large"
-          onClick={openModal}
+          onClick={sendOrder}
         >
           Оформить заказ
         </Button>
@@ -92,7 +114,7 @@ const BurgerConstructor = () => {
       {isModalOpen && (
         <Modal
           onClose={closeModal}
-          children={<OrderDetails orderNumber="034536" />}
+          children={<OrderDetails />}
         />
       )}
     </div>
