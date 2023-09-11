@@ -5,7 +5,9 @@ import type { Ingredient } from "../../types";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import IngredientCard from "../ingredient/ingredient";
-import { useModal } from "../../hooks";
+import { useModal, useAppDispatch } from "../../hooks";
+
+import { setCurrentIngredient, unsetCurrentIngredient } from "../../services/slices/ingredientsSlice";
 
 const TABS = ["Булки", "Соусы", "Начинки"];
 
@@ -15,7 +17,6 @@ type Props = {
 
 const BurgerIngredients: FC<Props> = (props) => {
   const [current, setCurrent] = useState("Булки");
-  const [choose, setChoose] = useState({} as Ingredient);
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
@@ -23,10 +24,17 @@ const BurgerIngredients: FC<Props> = (props) => {
   const SAUCES = props.ingredients.filter((item) => item.type === "sauce");
   const MAINS = props.ingredients.filter((item) => item.type === "main");
 
+  const dispatch = useAppDispatch();
+
   const handleClick = (value: Ingredient) => {
     openModal();
-    setChoose(value);
+    dispatch(setCurrentIngredient(value));
   };
+
+  const handleClose = () => {
+    dispatch(unsetCurrentIngredient());
+    closeModal()
+  }
 
   const handleScroll = () => {
     const ingredientSections = document.querySelectorAll('section');
@@ -98,8 +106,8 @@ const BurgerIngredients: FC<Props> = (props) => {
       {isModalOpen && (
         <Modal
           title="Детали ингредиента"
-          onClose={closeModal}
-          children={<IngredientDetails ingredient={choose} />}
+          onClose={handleClose}
+          children={<IngredientDetails />}
         />
       )}
     </div>

@@ -7,6 +7,7 @@ type IngredientsState = {
     ingredients: Ingredient[],
     chosenBun: Ingredient | null,
     chosenIngredients: Ingredient[],
+    currentIngredient: Ingredient | null,
     status: 'idle' | 'loading' | 'succeeded' | 'failed',
     error?: string
 }
@@ -15,6 +16,7 @@ const initialState: IngredientsState = {
     ingredients: [],
     chosenBun: null,
     chosenIngredients: [],
+    currentIngredient: null,
     status: 'idle',
 };
 
@@ -38,10 +40,16 @@ const ingredientsSlice = createSlice({
         deleteIngredient: (state, action: PayloadAction<Ingredient>) => {
             state.chosenIngredients = state.chosenIngredients.filter(ingredient => ingredient.id !== action.payload.id)
         },
-        reorderIngredient: (state, action) => {
+        reorderIngredient: (state, action: PayloadAction<{from: number, to: number}>) => {
             const item = state.chosenIngredients.splice(action.payload.from, 1)[0];
             state.chosenIngredients.splice(action.payload.to, 0, item);
-        }
+        },
+        setCurrentIngredient: (state, action: PayloadAction<Ingredient>) => {
+            state.currentIngredient = action.payload
+        },
+        unsetCurrentIngredient: (state) => {
+            state.currentIngredient = null
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -59,10 +67,11 @@ const ingredientsSlice = createSlice({
     }
 });
 
-export const { keepIngredient, keepBun, deleteIngredient, reorderIngredient } = ingredientsSlice.actions;
+export const { keepIngredient, keepBun, deleteIngredient, reorderIngredient, setCurrentIngredient, unsetCurrentIngredient } = ingredientsSlice.actions;
 
 export const selectIngredients = (state: RootState) => state.ingredients.ingredients;
 export const chosenIngredients = (state: RootState) => state.ingredients.chosenIngredients;
 export const chosenBun = (state: RootState) => state.ingredients.chosenBun;
+export const currentIngredient = (state: RootState) => state.ingredients.currentIngredient;
 
 export default ingredientsSlice.reducer;
