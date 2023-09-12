@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import AppStyles from "./app.module.css";
 
@@ -6,36 +6,39 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 
-import type { Ingredient } from "../../types";
+import { useAppSelector, useAppDispatch } from "../../hooks";
+
+import { fetchIngredientsAsync, selectIngredients } from "../../services/slices/ingredientsSlice";
+
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
-  const [data, setData] = useState<Ingredient[]>([]);
-  const fetchData = () => {
-    fetch("https://norma.nomoreparties.space/api/ingredients")
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка ${res.status}`);
-      })
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch(console.error);
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+    const dispatch = useAppDispatch();
+
+    const ingredients = useAppSelector(selectIngredients);
+    const status = useAppSelector((state) => state.ingredients.status);
+    const error = useAppSelector((state) => state.ingredients.error);
+
+    useEffect(() => {
+        dispatch(fetchIngredientsAsync());
+    }, [dispatch]);
+
+    if (status === 'loading') {
+        return <div>Loading...</div>
+    } else if (status === 'failed') {
+        return <div>Error: {error}</div>
+    }
 
   return (
     <div className={AppStyles.app}>
       <AppHeader />
-      {data.length > 0 && (
-        <main className={AppStyles.main}>
-          <BurgerIngredients ingredients={data} />
-          <BurgerConstructor ingredients={data} />
-        </main>
-      )}
+            <main className={AppStyles.main}>
+                <DndProvider backend={HTML5Backend}>
+                    {ingredients.length && <BurgerIngredients ingredients={ingredients}/>}
+                    <BurgerConstructor />
+                </DndProvider>
+            </main>
     </div>
   );
 }

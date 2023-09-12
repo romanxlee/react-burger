@@ -1,4 +1,5 @@
 export type Ingredient = {
+    id?: string;
     _id: string,
     name: string,
     type: string,
@@ -11,4 +12,12 @@ export type Ingredient = {
     image_mobile: string,
     image_large: string,
     __v: number,
+}
+
+export type Order = {
+    name: string,
+    order: {
+        number: number,
+    },
+    success: boolean,
 }

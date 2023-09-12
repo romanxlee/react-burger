@@ -1,72 +1,111 @@
-import { type FC } from "react";
+import { useMemo } from "react";
 import {
   ConstructorElement,
   CurrencyIcon,
   Button,
-  DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerConstructorStyles from "./burger-constructor.module.css";
 import type { Ingredient } from "../../types";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { useModal } from "../../hooks/useModal";
+import { useAppDispatch, useAppSelector, useModal } from "../../hooks";
+import ConstructorItem from "../constructor-item/constructor-item";
 
-type Props = {
-  ingredients: Ingredient[];
-};
+import { useDrop } from 'react-dnd'
 
-const BurgerConstructor: FC<Props> = (props) => {
+import { keepIngredient, keepBun, chosenIngredients, chosenBun } from "../../services/slices/ingredientsSlice";
+import { fetchOrder } from "../../services/slices/orderSlice";
+
+import { v4 as uuid } from 'uuid';
+
+const BurgerConstructor = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const BUN = props.ingredients.filter((item) => item.type === "bun")[0];
-  const INGREDIENTS = props.ingredients.filter((item) => item.type !== "bun");
+  const bun = useAppSelector(chosenBun)
+  const mainIngredients = useAppSelector(chosenIngredients)
+
+  const dispatch = useAppDispatch();
+
+    const [, drop] = useDrop({
+        accept: 'ingredient',
+        drop(item: Ingredient) {
+            item.type === "bun" ? dispatch(keepBun({...item, id: uuid()})) : dispatch(keepIngredient({...item, id: uuid()}))
+        },
+        collect: (monitor) => ({
+            isOver: monitor.isOver(),
+        }),
+    })
+
+    const totalSum = useMemo(() => {
+        let sum = 0
+
+        if (bun) sum += bun.price * 2;
+
+        if (mainIngredients.length) {
+            mainIngredients.forEach(ingredient => sum += ingredient.price)
+        }
+
+        return sum;
+    }, [bun, mainIngredients])
+
+    const ingredientsId = useMemo(() => {
+        let ids: string[] = []
+
+        if (bun) ids.push(bun._id)
+
+        if (mainIngredients.length) {
+            const mainIds = mainIngredients.map(item => {
+                return item._id
+            })
+
+            ids = [...mainIds, ...ids]
+        }
+
+        return ids
+    }, [bun, mainIngredients])
+
+    const sendOrder = async () => {
+        openModal()
+        dispatch(fetchOrder(ingredientsId))
+    }
 
   return (
-    <div className={BurgerConstructorStyles.container}>
-      <div className={BurgerConstructorStyles.item}>
-        <div className={BurgerConstructorStyles.blank} />
-        <ConstructorElement
-          type="top"
-          text={`${BUN.name} (верх)`}
-          thumbnail={BUN.image}
-          price={BUN.price}
-          isLocked={true}
-        />
-      </div>
-      <div className={BurgerConstructorStyles.ingredients}>
-        {INGREDIENTS.map((item) => (
-          <div key={item._id} className={BurgerConstructorStyles.item}>
-            <div className={BurgerConstructorStyles.drag}>
-              <DragIcon type="primary" />
+    <div className={BurgerConstructorStyles.container} ref={drop}>
+            {bun && <div className={BurgerConstructorStyles.item}>
+                <div className={BurgerConstructorStyles.blank}/>
+                <ConstructorElement
+                    type="top"
+                    text={`${bun.name} (верх)`}
+                    thumbnail={bun.image}
+                    price={bun.price}
+                    isLocked={true}
+                />
+            </div>}
+            <div className={BurgerConstructorStyles.ingredients}>
+                {mainIngredients.map((item, index) => (
+                    <ConstructorItem key={item.id} ingredient={item} index={index} />
+                ))}
             </div>
-            <ConstructorElement
-              text={item.name}
-              thumbnail={item.image}
-              price={item.price}
-            />
-          </div>
-        ))}
-      </div>
-      <div className={BurgerConstructorStyles.item}>
-        <div className={BurgerConstructorStyles.blank} />
-        <ConstructorElement
-          type="bottom"
-          text={`${BUN.name} (низ)`}
-          thumbnail={BUN.image}
-          price={BUN.price}
-          isLocked={true}
-        />
-      </div>
+            {bun && <div className={BurgerConstructorStyles.item}>
+                <div className={BurgerConstructorStyles.blank}/>
+                <ConstructorElement
+                    type="bottom"
+                    text={`${bun.name} (низ)`}
+                    thumbnail={bun.image}
+                    price={bun.price}
+                    isLocked={true}
+                />
+            </div>}
       <div className={BurgerConstructorStyles.order}>
         <div className={BurgerConstructorStyles.price}>
-          <span className="text text_type_digits-default">610</span>
+          <span className="text text_type_digits-default">{totalSum}</span>
           <CurrencyIcon type="primary" />
         </div>
         <Button
           htmlType="button"
           type="primary"
           size="large"
-          onClick={openModal}
+          onClick={sendOrder}
         >
           Оформить заказ
         </Button>
@@ -75,7 +114,7 @@ const BurgerConstructor: FC<Props> = (props) => {
       {isModalOpen && (
         <Modal
           onClose={closeModal}
-          children={<OrderDetails orderNumber="034536" />}
+          children={<OrderDetails />}
         />
       )}
     </div>
