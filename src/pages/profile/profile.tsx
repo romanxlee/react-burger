@@ -1,7 +1,7 @@
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import AccountForm from '../../components/account-form/account-form';
+import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
+import AccountForm from "../../components/account-form/account-form";
 
-import styles from './profile.module.css';
+import styles from "./profile.module.css";
 
 const Profile = () => {
   return (
@@ -11,7 +11,9 @@ const Profile = () => {
         <span className="text text_type_main-default text_color_inactive pt-5 pb-5">
           История заказов
         </span>
-        <span className="text text_type_main-default text_color_inactive pt-5 pb-5">Выход</span>
+        <span className="text text_type_main-default text_color_inactive pt-5 pb-5">
+          Выход
+        </span>
 
         <span className="text text_type_main-small text_color_inactive mt-20">
           В этом разделе вы можете изменить свои персональные данные
@@ -21,22 +23,22 @@ const Profile = () => {
         inputs={
           <>
             <Input
-              value={''}
+              value={""}
               icon="EditIcon"
-              placeholder={'Имя'}
-              onChange={() => console.log('asd')}
+              placeholder={"Имя"}
+              onChange={() => console.log("asd")}
             />
             <Input
-              value={''}
-              placeholder={'Логин'}
+              value={""}
+              placeholder={"Логин"}
               icon="EditIcon"
-              onChange={() => console.log('asd')}
+              onChange={() => console.log("asd")}
             />
             <Input
-              value={''}
-              placeholder={'Пароль'}
+              value={""}
+              placeholder={"Пароль"}
               icon="EditIcon"
-              onChange={() => console.log('asd')}
+              onChange={() => console.log("asd")}
             />
           </>
         }
