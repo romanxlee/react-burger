@@ -1,0 +1,11 @@
+.root {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    margin-right: 60px;
+    padding-left: 16px;
+}
