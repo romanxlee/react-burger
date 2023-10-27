@@ -1,5 +1,6 @@
 import { BASE_URL } from "../../utils/consts";
 import { Auth } from "../../types";
+import { setCookie } from "../../utils/setCookie";
 export const userRegister = async (
   email: string,
   password: string,
@@ -35,7 +36,10 @@ export const userLogin = async (email: string, password: string) => {
       }
       return Promise.reject(`Ошибка ${res.status}`);
     })
-    .then((res) => res as Auth);
+    .then((res: Auth) => {
+      setCookie("token", res.accessToken, { expires: 1200 });
+      return res;
+    });
 };
 
 export const refreshToken = async (token: string) => {

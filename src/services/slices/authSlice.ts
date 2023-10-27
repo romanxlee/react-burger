@@ -6,11 +6,13 @@ import { User } from "../../types";
 type AuthState = {
   user: User | null;
   status: "idle" | "loading" | "succeeded" | "failed";
+  isLogged: boolean;
   error?: string;
 };
 
 const initialState: AuthState = {
   user: null,
+  isLogged: false,
   status: "idle",
 };
 
@@ -51,6 +53,7 @@ export const registrationSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.status = "succeeded";
+        state.isLogged = true;
         state.user = action.payload.user;
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -61,5 +64,6 @@ export const registrationSlice = createSlice({
 });
 
 export const currentUser = (state: RootState) => state.auth.user;
+export const isLogged = (state: RootState) => state.auth.isLogged;
 
 export default registrationSlice.reducer;

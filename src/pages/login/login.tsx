@@ -3,16 +3,21 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import AccountForm from "../../components/account-form/account-form";
-import { ChangeEvent, useState } from "react";
-import { useAppDispatch } from "../../hooks";
-import { loginUser } from "../../services/slices/authSlice";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { loginUser, isLogged } from "../../services/slices/authSlice";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [user, setUser] = useState({ email: "", password: "", name: "" });
   const [type, setType] = useState<"email" | "password" | "text" | undefined>(
     "password",
   );
+
   const dispatch = useAppDispatch();
+  const logged = useAppSelector(isLogged);
+
+  const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -29,6 +34,12 @@ function Login() {
   const onSubmit = async () => {
     await dispatch(loginUser(user));
   };
+
+  useEffect(() => {
+    if (logged) {
+      navigate("/");
+    }
+  }, [logged]);
 
   return (
     <AccountForm
