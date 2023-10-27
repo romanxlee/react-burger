@@ -1,36 +1,65 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { userRegister } from "../api/auth";
+import { userRegister, userLogin } from "../api/auth";
+import { RootState } from "./index";
+import { User } from "../../types";
+
+type AuthState = {
+  user: User | null;
+  status: "idle" | "loading" | "succeeded" | "failed";
+  error?: string;
+};
+
+const initialState: AuthState = {
+  user: null,
+  status: "idle",
+};
 
 export const registerUser = createAsyncThunk(
-  "jwtRegistration/registerUser",
-  async (user: { email: string; password: string; name: string }, thunkAPI) => {
-    try {
-      const response = await userRegister(user.email, user.password, user.name);
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue({ error: error.message });
-    }
+  "auth/registerUser",
+  async (user: { email: string; password: string; name: string }) => {
+    return await userRegister(user.email, user.password, user.name);
+  },
+);
+
+export const loginUser = createAsyncThunk(
+  "auth/loginUser",
+  async (user: { email: string; password: string }) => {
+    return await userLogin(user.email, user.password);
   },
 );
 
 export const registrationSlice = createSlice({
-  name: "jwtRegistration",
-  initialState: { entities: [], loading: "idle", error: null },
+  name: "auth",
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(registerUser.pending, (state, action) => {
-        state.loading = "waiting";
+      .addCase(registerUser.pending, (state) => {
+        state.status = "loading";
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.loading = "idle";
-        state.entities.push(action.payload);
+        state.status = "idle";
+        state.user = action.payload.user;
       })
       .addCase(registerUser.rejected, (state, action) => {
-        state.loading = "idle";
-        state.error = action.payload.error;
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      // Handle login actions
+      .addCase(loginUser.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.user = action.payload.user;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
   },
 });
+
+export const currentUser = (state: RootState) => state.auth.user;
 
 export default registrationSlice.reducer;

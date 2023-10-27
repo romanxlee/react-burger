@@ -1,5 +1,5 @@
 import { BASE_URL } from "../../utils/consts";
-
+import { Auth } from "../../types";
 export const userRegister = async (
   email: string,
   password: string,
@@ -11,12 +11,14 @@ export const userRegister = async (
       "Content-Type": "application/json;charset=utf-8",
     },
     body: JSON.stringify({ email: email, password: password, name: name }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка ${res.status}`);
-  });
+  })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка ${res.status}`);
+    })
+    .then((res) => res as Auth);
 };
 
 export const userLogin = async (email: string, password: string) => {
@@ -33,7 +35,7 @@ export const userLogin = async (email: string, password: string) => {
       }
       return Promise.reject(`Ошибка ${res.status}`);
     })
-    .then((res) => res);
+    .then((res) => res as Auth);
 };
 
 export const refreshToken = async (token: string) => {
