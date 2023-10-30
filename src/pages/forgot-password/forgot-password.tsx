@@ -3,19 +3,38 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import AccountForm from "../../components/account-form/account-form";
+import { useState } from "react";
+import { passwordForgot } from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 function ForgotPassword() {
+  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
+    const res = await passwordForgot(email);
+    if (res.success) navigate("/reset-password");
+  };
+
   return (
     <AccountForm
       title={"Восстановление пароля"}
       inputs={
         <>
           <Input
-            value={""}
+            value={email}
             placeholder={"Укажите e-mail"}
-            onChange={() => console.log("asd")}
+            type="email"
+            onChange={(e) => setEmail(e.target.value)}
           />
-          <Button htmlType="button">Восстановить</Button>
+          <Button
+            htmlType="button"
+            // simple email validation
+            disabled={!/^\S+@\S+\.\S+$/.test(email)}
+            onClick={handleSubmit}
+          >
+            Восстановить
+          </Button>
         </>
       }
       additional={

@@ -1,6 +1,6 @@
 import { BASE_URL } from "../../utils/consts";
 
-export const forgotPassword = async (email: string) => {
+export const passwordForgot = async (email: string) => {
   return fetch(`${BASE_URL}/password-reset`, {
     method: "POST",
     headers: {
@@ -15,7 +15,7 @@ export const forgotPassword = async (email: string) => {
   });
 };
 
-export const resetPassword = async (password: string, token: string) => {
+export const passwordReset = async (password: string, token: string) => {
   return fetch(`${BASE_URL}/password-reset/reset`, {
     method: "POST",
     headers: {

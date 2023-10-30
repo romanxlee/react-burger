@@ -3,24 +3,38 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import AccountForm from "../../components/account-form/account-form";
+import { useState } from "react";
+import { passwordReset } from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 function ResetPassword() {
+  const [password, setPassword] = useState("");
+  const [token, setToken] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
+    const res = await passwordReset(password, token);
+    if (res.success) navigate("/login");
+  };
+
   return (
     <AccountForm
       title={"Восстановление пароля"}
       inputs={
         <>
           <Input
-            value={""}
+            value={password}
             placeholder={"Введите новый пароль"}
-            onChange={() => console.log("asd")}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <Input
-            value={""}
+            value={token}
             placeholder={"Введите код из письма"}
-            onChange={() => console.log("asd")}
+            onChange={(e) => setToken(e.target.value)}
           />
-          <Button htmlType="button">Сохранить</Button>
+          <Button htmlType="button" onClick={handleSubmit}>
+            Сохранить
+          </Button>
         </>
       }
       additional={
