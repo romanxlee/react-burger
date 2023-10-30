@@ -3,11 +3,11 @@ interface SetCookieProps {
   [key: string]: number | Date | string | boolean | undefined;
 }
 
-export function setCookie(
+export const setCookie = (
   name: string,
   value: string,
   props: SetCookieProps = {},
-) {
+) => {
   let exp = props.expires;
   if (exp && typeof exp == "number") {
     const d = new Date();
@@ -27,4 +27,19 @@ export function setCookie(
     }
   }
   document.cookie = updatedCookie;
-}
+};
+
+export const getCookie = (name: string) => {
+  const matches = document.cookie.match(
+    new RegExp(
+      "(?:^|; )" + name.replace(/([.$?*|{}()\]\\^])/g, "\\$1") + "=([^;]*)",
+    ),
+  );
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+};
+
+export const deleteCookie = (name: string) => {
+  setCookie(name, "", {
+    expires: -1,
+  });
+};

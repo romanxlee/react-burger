@@ -5,23 +5,27 @@ import {
 import AccountForm from "../../components/account-form/account-form";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { loginUser, isLogged } from "../../services/slices/authSlice";
+import { loginUser, currentUser } from "../../services/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const [user, setUser] = useState({ email: "", password: "", name: "" });
+  const [userInput, setUserInput] = useState({
+    email: "",
+    password: "",
+    name: "",
+  });
   const [type, setType] = useState<"email" | "password" | "text" | undefined>(
     "password",
   );
 
   const dispatch = useAppDispatch();
-  const logged = useAppSelector(isLogged);
+  const user = useAppSelector(currentUser);
 
   const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUser((prevState) => ({
+    setUserInput((prevState) => ({
       ...prevState,
       [name]: value,
     }));
@@ -32,14 +36,14 @@ function Login() {
   };
 
   const onSubmit = async () => {
-    await dispatch(loginUser(user));
+    await dispatch(loginUser(userInput));
   };
 
   useEffect(() => {
-    if (logged) {
+    if (user) {
       navigate("/");
     }
-  }, [logged]);
+  }, [user]);
 
   return (
     <AccountForm
@@ -47,13 +51,13 @@ function Login() {
       inputs={
         <>
           <Input
-            value={user.email}
+            value={userInput.email}
             placeholder={"E-mail"}
             name="email"
             onChange={(e) => handleChange(e)}
           />
           <Input
-            value={user.password}
+            value={userInput.password}
             placeholder={"Пароль"}
             icon={type === "password" ? "ShowIcon" : "HideIcon"}
             type={type}
