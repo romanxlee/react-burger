@@ -9,3 +9,12 @@
     margin-right: 60px;
     padding-left: 16px;
 }
+
+.link {
+    text-decoration: none;
+    color: #8585AD;
+}
+
+.linkCurrent {
+    color: white;
+}
