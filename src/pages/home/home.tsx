@@ -15,7 +15,7 @@ import {
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-function Home() {
+export const Home = () => {
   const dispatch = useAppDispatch();
 
   const ingredients = useAppSelector(selectIngredients);
@@ -40,6 +40,4 @@ function Home() {
       </DndProvider>
     </main>
   );
-}
-
-export default Home;
+};

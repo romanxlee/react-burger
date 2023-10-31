@@ -7,7 +7,7 @@ import { useState } from "react";
 import { passwordReset } from "../../services/api";
 import { useNavigate } from "react-router-dom";
 
-function ResetPassword() {
+export const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
   const navigate = useNavigate();
@@ -47,6 +47,4 @@ function ResetPassword() {
       }
     />
   );
-}
-
-export default ResetPassword;
+};

@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { loginUser, currentUser } from "../../services/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+export const Login = () => {
   const [userInput, setUserInput] = useState({
     email: "",
     password: "",
@@ -84,6 +84,4 @@ function Login() {
       }
     />
   );
-}
-
-export default Login;
+};

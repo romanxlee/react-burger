@@ -7,7 +7,7 @@ import { useAppDispatch } from "../../hooks";
 import { registerUser } from "../../services/slices/authSlice";
 import { ChangeEvent, useState } from "react";
 
-function Register() {
+export const Register = () => {
   const [user, setUser] = useState({ email: "", password: "", name: "" });
   const [type, setType] = useState<"email" | "password" | "text" | undefined>(
     "password",
@@ -73,6 +73,4 @@ function Register() {
       }
     />
   );
-}
-
-export default Register;
+};

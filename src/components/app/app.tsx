@@ -3,12 +3,14 @@ import AppStyles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 
-import Home from "../../pages/home/home";
-import Login from "../../pages/login/login";
-import Register from "../../pages/register/register";
-import ForgotPassword from "../../pages/forgot-password/forgot-password";
-import ResetPassword from "../../pages/reset-password/reset-password";
-import Profile from "../../pages/profile/profile";
+import {
+  Home,
+  Login,
+  Register,
+  ForgotPassword,
+  ResetPassword,
+  Profile,
+} from "../../pages";
 
 function App() {
   return (

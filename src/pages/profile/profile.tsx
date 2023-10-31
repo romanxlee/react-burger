@@ -7,7 +7,7 @@ import { deleteCookie, getCookie } from "../../utils/cookie";
 
 import styles from "./profile.module.css";
 
-const Profile = () => {
+export const Profile = () => {
   const user = useAppSelector(currentUser);
 
   const dispatch = useAppDispatch();
@@ -66,5 +66,3 @@ const Profile = () => {
     </div>
   );
 };
-
-export default Profile;

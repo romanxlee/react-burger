@@ -7,7 +7,7 @@ import { useState } from "react";
 import { passwordForgot } from "../../services/api";
 import { useNavigate } from "react-router-dom";
 
-function ForgotPassword() {
+export const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
@@ -47,6 +47,4 @@ function ForgotPassword() {
       }
     />
   );
-}
-
-export default ForgotPassword;
+};
