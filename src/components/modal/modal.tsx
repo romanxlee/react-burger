@@ -1,6 +1,6 @@
 import ModalStyles from "./modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import ModalOverlay from "../modal-overlay/modal-overlay";
+import { ModalOverlay } from "../modal-overlay/modal-overlay";
 import { type FC, ReactNode, useEffect } from "react";
 import { createPortal } from "react-dom";
 
@@ -10,7 +10,7 @@ type Props = {
   onClose: () => void;
 };
 
-const Modal: FC<Props> = ({ title, children, onClose }) => {
+export const Modal: FC<Props> = ({ title, children, onClose }) => {
   useEffect(() => {
     function onKeydown(event: KeyboardEvent) {
       if (event.key === "Escape") {
@@ -44,5 +44,3 @@ const Modal: FC<Props> = ({ title, children, onClose }) => {
     </>
   );
 };
-
-export default Modal;

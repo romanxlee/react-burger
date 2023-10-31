@@ -2,7 +2,7 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import AccountForm from "../../components/account-form/account-form";
+import { AccountForm } from "../../components";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { loginUser, currentUser } from "../../services/slices/authSlice";

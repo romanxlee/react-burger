@@ -1,5 +1,5 @@
 import { Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import AccountForm from "../../components/account-form/account-form";
+import { AccountForm } from "../../components";
 import { useAppSelector, useAppDispatch } from "../../hooks";
 import { currentUser, logoutUser } from "../../services/slices/authSlice";
 import { useNavigate, Link, useLocation } from "react-router-dom";

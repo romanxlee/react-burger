@@ -26,7 +26,7 @@ type DragItem = {
   type: string;
 };
 
-const ConstructorItem: FC<Props> = ({ ingredient, index }) => {
+export const ConstructorItem: FC<Props> = ({ ingredient, index }) => {
   const dispatch = useAppDispatch();
   const ref = useRef<HTMLDivElement>(null);
 
@@ -102,5 +102,3 @@ const ConstructorItem: FC<Props> = ({ ingredient, index }) => {
     </div>
   );
 };
-
-export default ConstructorItem;

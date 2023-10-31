@@ -1,4 +1,4 @@
-const OrderCheckmark = () => {
+export const OrderCheckmark = () => {
   return (
     <svg
       width="107"
@@ -72,5 +72,3 @@ const OrderCheckmark = () => {
     </svg>
   );
 };
-
-export default OrderCheckmark;

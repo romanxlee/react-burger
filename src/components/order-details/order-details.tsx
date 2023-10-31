@@ -1,11 +1,11 @@
-import OrderCheckmark from "../order-checkmark/order-checkmark";
+import { OrderCheckmark } from "../order-checkmark/order-checkmark";
 import OrderDetailsStyles from "./order-details.module.css";
 
 import { useAppSelector } from "../../hooks";
 import { orderDetail } from "../../services/slices/orderSlice";
 
-const OrderDetails = () => {
-  const order = useAppSelector(orderDetail)
+export const OrderDetails = () => {
+  const order = useAppSelector(orderDetail);
 
   return (
     <>
@@ -29,5 +29,3 @@ const OrderDetails = () => {
     </>
   );
 };
-
-export default OrderDetails;

@@ -2,8 +2,7 @@ import { useEffect } from "react";
 
 import HomeStyles from "./home.module.css";
 
-import BurgerIngredients from "../../components/burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../../components/burger-constructor/burger-constructor";
+import { BurgerIngredients, BurgerConstructor } from "../../components";
 
 import { useAppSelector, useAppDispatch } from "../../hooks";
 

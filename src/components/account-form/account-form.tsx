@@ -1,5 +1,5 @@
-import styles from './account-form.module.css';
-import { ReactNode, FC } from 'react';
+import styles from "./account-form.module.css";
+import { ReactNode, FC } from "react";
 
 type Props = {
   title?: string;
@@ -7,11 +7,13 @@ type Props = {
   additional?: ReactNode;
 };
 
-const AccountForm: FC<Props> = ({ title, inputs, additional }) => {
+export const AccountForm: FC<Props> = ({ title, inputs, additional }) => {
   return (
     <div className={styles.root}>
       <div className={styles.form}>
-        {title && <span className="text text_type_main-medium m-2">{title}</span>}
+        {title && (
+          <span className="text text_type_main-medium m-2">{title}</span>
+        )}
         {inputs}
       </div>
       {additional && (
@@ -22,5 +24,3 @@ const AccountForm: FC<Props> = ({ title, inputs, additional }) => {
     </div>
   );
 };
-
-export default AccountForm;

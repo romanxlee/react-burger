@@ -2,8 +2,8 @@ import IngredientDetailsStyles from "./ingredient-details.module.css";
 import { useAppSelector } from "../../hooks";
 import { currentIngredient } from "../../services/slices/ingredientsSlice";
 
-const IngredientDetails = () => {
-  const ingredient = useAppSelector(currentIngredient)
+export const IngredientDetails = () => {
+  const ingredient = useAppSelector(currentIngredient);
 
   return (
     <>
@@ -50,5 +50,3 @@ const IngredientDetails = () => {
     </>
   );
 };
-
-export default IngredientDetails;
