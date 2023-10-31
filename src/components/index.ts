@@ -8,3 +8,4 @@ export * from "./modal/modal";
 export * from "./modal-overlay/modal-overlay";
 export * from "./order-checkmark/order-checkmark";
 export * from "./order-details/order-details";
+export * from "./protected-route-element/protected-route-element";
