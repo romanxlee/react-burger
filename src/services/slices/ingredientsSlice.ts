@@ -1,14 +1,14 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { fetchIngredients } from '../api';
-import type { Ingredient } from '../../types';
-import type { RootState } from './index';
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { fetchIngredients } from "../api";
+import type { Ingredient, Status } from "../../types";
+import type { RootState } from "./index";
 
 type IngredientsState = {
   ingredients: Ingredient[];
   chosenBun: Ingredient | null;
   chosenIngredients: Ingredient[];
   currentIngredient: Ingredient | null;
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  status: Status;
   error?: string;
 };
 
@@ -17,15 +17,18 @@ const initialState: IngredientsState = {
   chosenBun: null,
   chosenIngredients: [],
   currentIngredient: null,
-  status: 'idle'
+  status: "idle",
 };
 
-export const fetchIngredientsAsync = createAsyncThunk('ingredients/fetchIngredients', async () => {
-  return await fetchIngredients();
-});
+export const fetchIngredientsAsync = createAsyncThunk(
+  "ingredients/fetchIngredients",
+  async () => {
+    return await fetchIngredients();
+  },
+);
 
 const ingredientsSlice = createSlice({
-  name: 'ingredients',
+  name: "ingredients",
   initialState,
   reducers: {
     keepBun: (state, action: PayloadAction<Ingredient>) => {
@@ -36,10 +39,13 @@ const ingredientsSlice = createSlice({
     },
     deleteIngredient: (state, action: PayloadAction<Ingredient>) => {
       state.chosenIngredients = state.chosenIngredients.filter(
-        (ingredient) => ingredient.id !== action.payload.id
+        (ingredient) => ingredient.id !== action.payload.id,
       );
     },
-    reorderIngredient: (state, action: PayloadAction<{ from: number; to: number }>) => {
+    reorderIngredient: (
+      state,
+      action: PayloadAction<{ from: number; to: number }>,
+    ) => {
       const item = state.chosenIngredients.splice(action.payload.from, 1)[0];
       state.chosenIngredients.splice(action.payload.to, 0, item);
     },
@@ -48,22 +54,22 @@ const ingredientsSlice = createSlice({
     },
     unsetCurrentIngredient: (state) => {
       state.currentIngredient = null;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchIngredientsAsync.pending, (state) => {
-        state.status = 'loading';
+        state.status = "loading";
       })
       .addCase(fetchIngredientsAsync.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.status = "succeeded";
         state.ingredients = action.payload;
       })
       .addCase(fetchIngredientsAsync.rejected, (state, action) => {
-        state.status = 'failed';
+        state.status = "failed";
         state.error = action.error.message;
       });
-  }
+  },
 });
 
 export const {
@@ -72,12 +78,15 @@ export const {
   deleteIngredient,
   reorderIngredient,
   setCurrentIngredient,
-  unsetCurrentIngredient
+  unsetCurrentIngredient,
 } = ingredientsSlice.actions;
 
-export const selectIngredients = (state: RootState) => state.ingredients.ingredients;
-export const chosenIngredients = (state: RootState) => state.ingredients.chosenIngredients;
+export const selectIngredients = (state: RootState) =>
+  state.ingredients.ingredients;
+export const chosenIngredients = (state: RootState) =>
+  state.ingredients.chosenIngredients;
 export const chosenBun = (state: RootState) => state.ingredients.chosenBun;
-export const currentIngredient = (state: RootState) => state.ingredients.currentIngredient;
+export const currentIngredient = (state: RootState) =>
+  state.ingredients.currentIngredient;
 
 export default ingredientsSlice.reducer;

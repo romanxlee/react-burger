@@ -34,3 +34,5 @@ export type Auth = {
   accessToken: string;
   refreshToken: string;
 };
+
+export type Status = "idle" | "loading" | "succeeded" | "failed";

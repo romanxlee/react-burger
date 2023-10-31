@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { userRegister, userLogin, userLogout } from "../api/auth";
 import { RootState } from "./index";
-import { User } from "../../types";
+import { User, Status } from "../../types";
 
 type AuthState = {
   user: User | null;
-  status: "idle" | "loading" | "succeeded" | "failed";
+  status: Status;
   error?: string;
 };
 

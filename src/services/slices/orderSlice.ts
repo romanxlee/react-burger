@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import type { Order } from "../../types";
+import type { Order, Status } from "../../types";
 import { createOrder } from "../api";
 import { RootState } from "./index";
 
 interface OrderState {
   order: Order | null;
-  status: "idle" | "loading" | "succeeded" | "failed";
+  status: Status;
   error?: string;
 }
 
