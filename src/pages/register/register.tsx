@@ -3,9 +3,10 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { AccountForm } from "../../components";
-import { useAppDispatch } from "../../hooks";
-import { registerUser } from "../../services/slices/authSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { registerUser, authStatus } from "../../services/slices/authSlice";
 import { ChangeEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
   const [user, setUser] = useState({ email: "", password: "", name: "" });
@@ -13,6 +14,8 @@ export const Register = () => {
     "password",
   );
   const dispatch = useAppDispatch();
+  const status = useAppSelector(authStatus);
+  const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -27,8 +30,10 @@ export const Register = () => {
   };
 
   const onSubmit = async () => {
-    console.log(user);
-    await dispatch(registerUser(user));
+    const res = (await dispatch(registerUser(user))) as {
+      payload: { success: boolean };
+    };
+    if (res.payload.success) navigate("/login");
   };
 
   return (

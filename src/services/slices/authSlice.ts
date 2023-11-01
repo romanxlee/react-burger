@@ -45,8 +45,7 @@ export const registrationSlice = createSlice({
         state.status = "loading";
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.status = "idle";
-        state.user = action.payload.user;
+        state.status = "succeeded";
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.status = "failed";
@@ -80,5 +79,6 @@ export const registrationSlice = createSlice({
 });
 
 export const currentUser = (state: RootState) => state.auth.user;
+export const authStatus = (state: RootState) => state.auth.status;
 
 export default registrationSlice.reducer;
