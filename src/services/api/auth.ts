@@ -37,7 +37,8 @@ export const userLogin = async (email: string, password: string) => {
       return Promise.reject(`Ошибка ${res.status}`);
     })
     .then((res: Auth) => {
-      setCookie("token", res.refreshToken, { expires: 1200 });
+      setCookie("refresh", res.refreshToken, { expires: 1200 });
+      setCookie("access", res.accessToken, { expires: 1200 });
       return res;
     });
 };
