@@ -4,10 +4,13 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { AccountForm } from "../../components";
 import { useAppSelector, useAppDispatch } from "../../hooks";
-import { currentUser, logoutUser } from "../../services/slices/authSlice";
+import {
+  currentUser,
+  logoutUser,
+  userUpdate,
+} from "../../services/slices/authSlice";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { deleteCookie, getCookie } from "../../utils/cookie";
-import { updateUser } from "../../services/api/user";
 
 import styles from "./profile.module.css";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -79,8 +82,7 @@ export const Profile = () => {
       </div>
       <AccountForm
         onSubmit={async () => {
-          console.log(userInput);
-          await updateUser(userInput);
+          await dispatch(userUpdate(userInput));
         }}
         inputs={
           <>

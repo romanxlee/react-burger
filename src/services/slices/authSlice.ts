@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { userRegister, userLogin, userLogout } from "../api/auth";
+import { getUser, updateUser } from "../api/user";
 import { RootState } from "./index";
 import { User, Status } from "../../types";
 
@@ -32,6 +33,17 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (user: { email: string; password: string }) => {
     return await userLogin(user.email, user.password);
+  },
+);
+
+export const userInfo = createAsyncThunk("auth/userInfo", async () => {
+  return await getUser();
+});
+
+export const userUpdate = createAsyncThunk(
+  "auth/userUpdate",
+  async (user: User) => {
+    return await updateUser(user);
   },
 );
 
@@ -74,11 +86,34 @@ export const registrationSlice = createSlice({
       .addCase(logoutUser.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      // Handle get user info actions
+      .addCase(userInfo.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(userInfo.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.user = action.payload.user;
+      })
+      .addCase(userInfo.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      // Handle update user info actions
+      .addCase(userUpdate.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(userUpdate.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.user = action.payload.user;
+      })
+      .addCase(userUpdate.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
   },
 });
 
 export const currentUser = (state: RootState) => state.auth.user;
-export const authStatus = (state: RootState) => state.auth.status;
 
 export default registrationSlice.reducer;
