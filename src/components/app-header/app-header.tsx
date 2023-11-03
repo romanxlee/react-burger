@@ -17,7 +17,7 @@ const AppHeader = () => {
           <BurgerIcon type="primary" />
           <span className="text text_type_main-default m-2">Конструктор</span>
         </Link>
-        <Link to="/" className={AppHeaderStyles.link}>
+        <Link to="/profile/orders" className={AppHeaderStyles.link}>
           <ListIcon type="secondary" />
           <span className="text text_type_main-default text_color_inactive m-2">
             Лента заказов

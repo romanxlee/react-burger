@@ -5,17 +5,22 @@ import {
 import { AccountForm } from "../../components";
 import { useState } from "react";
 import { passwordReset } from "../../services/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, Navigate } from "react-router-dom";
 
 export const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
   const navigate = useNavigate();
+  const { state } = useLocation();
 
   const handleSubmit = async () => {
     const res = await passwordReset(password, token);
     if (res.success) navigate("/login");
   };
+
+  if (!state) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <AccountForm

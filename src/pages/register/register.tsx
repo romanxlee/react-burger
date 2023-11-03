@@ -3,22 +3,27 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { AccountForm } from "../../components";
-import { useAppDispatch } from "../../hooks";
-import { registerUser } from "../../services/slices/authSlice";
-import { ChangeEvent, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { registerUser, currentUser } from "../../services/slices/authSlice";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
-  const [user, setUser] = useState({ email: "", password: "", name: "" });
+  const [userInput, setUserInput] = useState({
+    email: "",
+    password: "",
+    name: "",
+  });
   const [type, setType] = useState<"email" | "password" | "text" | undefined>(
     "password",
   );
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const user = useAppSelector(currentUser);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUser((prevState) => ({
+    setUserInput((prevState) => ({
       ...prevState,
       [name]: value,
     }));
@@ -29,11 +34,17 @@ export const Register = () => {
   };
 
   const onSubmit = async () => {
-    const res = (await dispatch(registerUser(user))) as {
+    const res = (await dispatch(registerUser(userInput))) as {
       payload: { success: boolean };
     };
     if (res.payload.success) navigate("/login");
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user]);
 
   return (
     <AccountForm
@@ -42,20 +53,20 @@ export const Register = () => {
       inputs={
         <>
           <Input
-            value={user.name}
+            value={userInput.name}
             placeholder={"Имя"}
             name="name"
             onChange={(e) => handleChange(e)}
           />
           <Input
-            value={user.email}
+            value={userInput.email}
             placeholder={"E-mail"}
             type="email"
             name="email"
             onChange={(e) => handleChange(e)}
           />
           <Input
-            value={user.password}
+            value={userInput.password}
             placeholder={"Пароль"}
             icon={type === "password" ? "ShowIcon" : "HideIcon"}
             type={type}
