@@ -8,6 +8,7 @@ import BurgerConstructorStyles from "./burger-constructor.module.css";
 import type { Ingredient } from "../../types";
 import { ConstructorItem, Modal, OrderDetails } from "../../components";
 import { useAppDispatch, useAppSelector, useModal } from "../../hooks";
+import { useNavigate } from "react-router-dom";
 
 import { useDrop } from "react-dnd";
 
@@ -20,14 +21,18 @@ import {
 import { fetchOrder } from "../../services/slices/orderSlice";
 
 import { v4 as uuid } from "uuid";
+import { currentUser } from "../../services/slices/authSlice";
 
 export const BurgerConstructor = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const bun = useAppSelector(chosenBun);
   const mainIngredients = useAppSelector(chosenIngredients);
+  const user = useAppSelector(currentUser);
 
   const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
 
   const [, drop] = useDrop({
     accept: "ingredient",
@@ -70,6 +75,7 @@ export const BurgerConstructor = () => {
   }, [bun, mainIngredients]);
 
   const sendOrder = async () => {
+    if (!user) return navigate("/login");
     openModal();
     dispatch(fetchOrder(ingredientsId));
   };

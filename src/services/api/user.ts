@@ -3,10 +3,13 @@ import { Auth, User } from "../../types";
 import { getCookie } from "../../utils/cookie";
 import { fetchWithRefresh } from "./fetchWithRefresh";
 
+const token = getCookie("access");
+
 export const getUser = async () => {
   return fetchWithRefresh(`${BASE_URL}/auth/user`, {
     headers: {
       "Content-Type": "application/json;charset=utf-8",
+      Authorization: String(token),
     },
   }).then((data: Auth) => {
     if (data.success) {
@@ -17,7 +20,6 @@ export const getUser = async () => {
 };
 
 export const updateUser = async (user: User) => {
-  const token = getCookie("access");
   return fetchWithRefresh(`${BASE_URL}/auth/user`, {
     method: "PATCH",
     headers: {

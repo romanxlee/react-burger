@@ -41,5 +41,6 @@ const orderSlice = createSlice({
 });
 
 export const orderDetail = (state: RootState) => state.orders.order;
+export const orderStatus = (state: RootState) => state.orders.status;
 
 export default orderSlice.reducer;
