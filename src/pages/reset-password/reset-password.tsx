@@ -20,6 +20,7 @@ export const ResetPassword = () => {
   return (
     <AccountForm
       title={"Восстановление пароля"}
+      onSubmit={handleSubmit}
       inputs={
         <>
           <Input
@@ -32,9 +33,7 @@ export const ResetPassword = () => {
             placeholder={"Введите код из письма"}
             onChange={(e) => setToken(e.target.value)}
           />
-          <Button htmlType="button" onClick={handleSubmit}>
-            Сохранить
-          </Button>
+          <Button htmlType="submit">Сохранить</Button>
         </>
       }
       additional={

@@ -39,6 +39,7 @@ export const Register = () => {
   return (
     <AccountForm
       title={"Регистрация"}
+      onSubmit={onSubmit}
       inputs={
         <>
           <Input
@@ -63,9 +64,7 @@ export const Register = () => {
             onChange={(e) => handleChange(e)}
             onIconClick={() => togglePassword()}
           />
-          <Button htmlType="button" onClick={() => onSubmit()}>
-            Зарегистрироваться
-          </Button>
+          <Button htmlType="submit">Зарегистрироваться</Button>
         </>
       }
       additional={

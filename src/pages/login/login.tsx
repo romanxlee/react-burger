@@ -48,6 +48,7 @@ export const Login = () => {
   return (
     <AccountForm
       title={"Вход"}
+      onSubmit={onSubmit}
       inputs={
         <>
           <Input
@@ -65,9 +66,7 @@ export const Login = () => {
             onChange={(e) => handleChange(e)}
             onIconClick={() => togglePassword()}
           />
-          <Button htmlType="button" onClick={() => onSubmit()}>
-            Войти
-          </Button>
+          <Button htmlType="submit">Войти</Button>
         </>
       }
       additional={

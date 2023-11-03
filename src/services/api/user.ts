@@ -28,11 +28,9 @@ export const updateUser = async (user: User) => {
       Authorization: `${token}`,
     },
     body: JSON.stringify({
-      user: {
-        email: user.email,
-        name: user.name,
-        password: user.password,
-      },
+      email: user.email,
+      name: user.name,
+      password: user.password,
     }),
   })
     .then((res) => {

@@ -19,6 +19,7 @@ export const ForgotPassword = () => {
   return (
     <AccountForm
       title={"Восстановление пароля"}
+      onSubmit={handleSubmit}
       inputs={
         <>
           <Input
@@ -28,10 +29,9 @@ export const ForgotPassword = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
           <Button
-            htmlType="button"
+            htmlType="submit"
             // simple email validation
             disabled={!/^\S+@\S+\.\S+$/.test(email)}
-            onClick={handleSubmit}
           >
             Восстановить
           </Button>

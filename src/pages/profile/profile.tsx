@@ -78,6 +78,10 @@ export const Profile = () => {
         </span>
       </div>
       <AccountForm
+        onSubmit={async () => {
+          console.log(userInput);
+          await updateUser(userInput);
+        }}
         inputs={
           <>
             <Input
@@ -109,11 +113,7 @@ export const Profile = () => {
                 >
                   Отмена
                 </button>
-                <YaButton
-                  htmlType="button"
-                  type="primary"
-                  onClick={() => updateUser(userInput)}
-                >
+                <YaButton htmlType="submit" type="primary">
                   Сохранить
                 </YaButton>
               </div>
