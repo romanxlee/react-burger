@@ -5,6 +5,7 @@ import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import { ProtectedRouteElement } from "../protected-route-element/protected-route-element";
 import { useAppDispatch } from "../../hooks";
 import { userInfo } from "../../services/slices/authSlice";
+import { fetchIngredientsAsync } from "../../services/slices/ingredientsSlice";
 import { useEffect } from "react";
 
 import {
@@ -14,6 +15,7 @@ import {
   ForgotPassword,
   ResetPassword,
   Profile,
+  Ingredients,
 } from "../../pages";
 
 function App() {
@@ -21,6 +23,7 @@ function App() {
 
   useEffect(() => {
     dispatch(userInfo());
+    dispatch(fetchIngredientsAsync());
   }, [dispatch]);
 
   return (
@@ -41,6 +44,7 @@ function App() {
               <Route path=":orderId" element={<Profile />} />
             </Route>
           </Route>
+          <Route path="/ingredients/:id" element={<Ingredients />} />
         </Routes>
       </Router>
     </div>
