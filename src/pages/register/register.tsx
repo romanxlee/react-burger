@@ -3,8 +3,8 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { AccountForm } from "../../components";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { registerUser, authStatus } from "../../services/slices/authSlice";
+import { useAppDispatch } from "../../hooks";
+import { registerUser } from "../../services/slices/authSlice";
 import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +14,6 @@ export const Register = () => {
     "password",
   );
   const dispatch = useAppDispatch();
-  const status = useAppSelector(authStatus);
   const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
