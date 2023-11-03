@@ -28,11 +28,17 @@ export const BurgerIngredients: FC<Props> = (props) => {
   const dispatch = useAppDispatch();
 
   const handleClick = (value: Ingredient) => {
+    window.history.pushState(
+      null,
+      "Stellar Burgers",
+      `ingredients/${value._id}`,
+    );
     openModal();
     dispatch(setCurrentIngredient(value));
   };
 
   const handleClose = () => {
+    window.history.pushState(null, "Stellar Burgers", `/`);
     dispatch(unsetCurrentIngredient());
     closeModal();
   };
