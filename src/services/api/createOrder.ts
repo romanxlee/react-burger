@@ -1,6 +1,7 @@
 import { BASE_URL } from "../../utils/consts";
 import { fetchWithRefresh } from "./fetchWithRefresh";
 import { getCookie } from "../../utils/cookie";
+import { Order } from "../../types";
 
 export const createOrder = async (ingredients: string[]) => {
   const token = getCookie("access");
@@ -11,7 +12,7 @@ export const createOrder = async (ingredients: string[]) => {
       Authorization: String(token),
     },
     body: JSON.stringify({ ingredients: ingredients }),
-  }).then((data) => {
+  }).then((data: Order) => {
     if (data.success) {
       return data;
     }

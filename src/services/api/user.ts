@@ -8,7 +8,7 @@ export const getUser = async () => {
     headers: {
       "Content-Type": "application/json;charset=utf-8",
     },
-  }).then((data) => {
+  }).then((data: Auth) => {
     if (data.success) {
       return data;
     }
@@ -29,7 +29,7 @@ export const updateUser = async (user: User) => {
       name: user.name,
       password: user.password,
     }),
-  }).then((data) => {
+  }).then((data: Auth) => {
     if (data.success) {
       return data;
     }
