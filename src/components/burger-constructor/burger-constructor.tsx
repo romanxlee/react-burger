@@ -68,7 +68,7 @@ export const BurgerConstructor = () => {
         return item._id;
       });
 
-      ids = [...mainIds, ...ids];
+      ids = [...ids, ...mainIds, ...ids];
     }
 
     return ids;
@@ -120,6 +120,7 @@ export const BurgerConstructor = () => {
           htmlType="button"
           type="primary"
           size="large"
+          disabled={!Boolean(bun)}
           onClick={sendOrder}
         >
           Оформить заказ

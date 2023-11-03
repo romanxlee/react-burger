@@ -6,24 +6,21 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useMatch } from "react-router-dom";
 
 const AppHeader = () => {
-  const location = useLocation();
   return (
-    <header className={`${AppHeaderStyles.header} p-4`}>
+    <header
+      className={`${AppHeaderStyles.header} ${!useMatch("/") && "mb-30"} p-4`}
+    >
       <div
         className={`${AppHeaderStyles.container} ${AppHeaderStyles.flexBasis}`}
       >
         <Link to="/" className={AppHeaderStyles.link}>
-          <BurgerIcon
-            type={location.pathname === "/" ? "primary" : "secondary"}
-          />
+          <BurgerIcon type={useMatch("/") ? "primary" : "secondary"} />
           <span
             className={`${
-              location.pathname === "/"
-                ? "text_color_primary"
-                : "text_color_inactive"
+              useMatch("/") ? "text_color_primary" : "text_color_inactive"
             } text text_type_main-default m-2`}
           >
             Конструктор
@@ -31,13 +28,11 @@ const AppHeader = () => {
         </Link>
         <Link to="/profile/orders" className={AppHeaderStyles.link}>
           <ListIcon
-            type={
-              location.pathname === "/profile/orders" ? "primary" : "secondary"
-            }
+            type={useMatch("/profile/orders") ? "primary" : "secondary"}
           />
           <span
             className={`${
-              location.pathname === "/profile/orders"
+              useMatch("/profile/orders")
                 ? "text_color_primary"
                 : "text_color_inactive"
             } text text_type_main-default m-2`}
@@ -56,14 +51,10 @@ const AppHeader = () => {
         to="/profile"
         className={`${AppHeaderStyles.link} ${AppHeaderStyles.flexBasis} ${AppHeaderStyles.lastLink}`}
       >
-        <ProfileIcon
-          type={location.pathname === "/profile" ? "primary" : "secondary"}
-        />
+        <ProfileIcon type={useMatch("/profile") ? "primary" : "secondary"} />
         <span
           className={`${
-            location.pathname === "/profile"
-              ? "text_color_primary"
-              : "text_color_inactive"
+            useMatch("/profile") ? "text_color_primary" : "text_color_inactive"
           } text text_type_main-default m-2`}
         >
           Личный кабинет

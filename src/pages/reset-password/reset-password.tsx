@@ -19,7 +19,7 @@ export const ResetPassword = () => {
   };
 
   if (!state) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/forgot-password" replace />;
   }
 
   return (

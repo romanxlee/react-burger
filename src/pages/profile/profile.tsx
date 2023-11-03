@@ -9,7 +9,7 @@ import {
   logoutUser,
   userUpdate,
 } from "../../services/slices/authSlice";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 
 import styles from "./profile.module.css";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -21,7 +21,6 @@ export const Profile = () => {
   const [userInput, setUserInput] = useState(user as User);
 
   const dispatch = useAppDispatch();
-  const location = useLocation();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -48,16 +47,16 @@ export const Profile = () => {
       <div className={styles.links}>
         <Link
           to="/profile"
-          className={`${
-            location.pathname === "/profile" && styles.linkCurrent
-          } ${styles.link} text text_type_main-default pt-5 pb-5`}
+          className={`${useMatch("/profile") && styles.linkCurrent} ${
+            styles.link
+          } text text_type_main-default pt-5 pb-5`}
         >
           Профиль
         </Link>
         <Link
           to="/profile/orders"
           className={`${
-            location.pathname === "/profile/orders" && styles.linkCurrent
+            useMatch("/profile/orders") && styles.linkCurrent
           } text text_type_main-default text_color_inactive pt-5 pb-5 ${
             styles.link
           }`}
