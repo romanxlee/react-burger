@@ -8,11 +8,13 @@ type AuthState = {
   user: User | null;
   status: Status;
   error?: string;
+  isAuthChecked: boolean;
 };
 
 const initialState: AuthState = {
   user: null,
   status: "idle",
+  isAuthChecked: false,
 };
 
 export const registerUser = createAsyncThunk(
@@ -22,12 +24,9 @@ export const registerUser = createAsyncThunk(
   },
 );
 
-export const logoutUser = createAsyncThunk(
-  "auth/logoutUser",
-  async (token: string) => {
-    return await userLogout(token);
-  },
-);
+export const logoutUser = createAsyncThunk("auth/logoutUser", async () => {
+  return await userLogout();
+});
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
@@ -93,10 +92,12 @@ export const registrationSlice = createSlice({
       })
       .addCase(userInfo.fulfilled, (state, action) => {
         state.status = "succeeded";
+        state.isAuthChecked = true;
         state.user = action.payload.user;
       })
       .addCase(userInfo.rejected, (state, action) => {
         state.status = "failed";
+        state.isAuthChecked = true;
         state.error = action.error.message;
       })
       // Handle update user info actions

@@ -3,10 +3,10 @@ import {
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { AccountForm } from "../../components";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { registerUser, currentUser } from "../../services/slices/authSlice";
-import { ChangeEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../hooks";
+import { registerUser } from "../../services/slices/authSlice";
+import { ChangeEvent, useState } from "react";
+import { Link } from "react-router-dom";
 
 export const Register = () => {
   const [userInput, setUserInput] = useState({
@@ -18,8 +18,6 @@ export const Register = () => {
     "password",
   );
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const user = useAppSelector(currentUser);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -34,17 +32,8 @@ export const Register = () => {
   };
 
   const onSubmit = async () => {
-    const res = (await dispatch(registerUser(userInput))) as {
-      payload: { success: boolean };
-    };
-    if (res.payload.success) navigate("/login");
+    await dispatch(registerUser(userInput));
   };
-
-  useEffect(() => {
-    if (user) {
-      navigate("/");
-    }
-  }, [user]);
 
   return (
     <AccountForm
@@ -81,7 +70,7 @@ export const Register = () => {
         <>
           <span className="text text_type_main-default text_color_inactive">
             Уже зарегистрированы?
-            <a href="/login"> Войти</a>
+            <Link to="/login"> Войти</Link>
           </span>
         </>
       }

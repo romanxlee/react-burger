@@ -43,7 +43,6 @@ export const IngredientCard: FC<Props> = (props) => {
 
   return (
     <div
-      key={props.ingredient._id}
       className={BurgerIngredientsStyles.card}
       onClick={() => props.onCLick(props.ingredient)}
       ref={drag}
@@ -65,7 +64,6 @@ export const IngredientCard: FC<Props> = (props) => {
         <CurrencyIcon type="primary" />
       </div>
       <span
-        key={props.ingredient._id}
         className={`${BurgerIngredientsStyles.name} text text_type_main-small`}
       >
         {props.ingredient.name}

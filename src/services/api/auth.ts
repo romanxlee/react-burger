@@ -1,6 +1,6 @@
 import { BASE_URL } from "../../utils/consts";
 import { Auth } from "../../types";
-import { setCookie } from "../../utils/cookie";
+import { deleteCookie, getCookie, setCookie } from "../../utils/cookie";
 export const userRegister = async (
   email: string,
   password: string,
@@ -58,7 +58,8 @@ export const refreshToken = async (token: string) => {
   });
 };
 
-export const userLogout = async (token: string) => {
+export const userLogout = async () => {
+  const token = getCookie("refresh");
   return fetch(`${BASE_URL}/auth/logout`, {
     method: "POST",
     headers: {
@@ -67,6 +68,8 @@ export const userLogout = async (token: string) => {
     body: JSON.stringify({ token: token }),
   }).then((res) => {
     if (res.ok) {
+      deleteCookie("refresh");
+      deleteCookie("access");
       return res.json();
     }
     return Promise.reject(`Ошибка ${res.status}`);

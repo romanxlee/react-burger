@@ -6,7 +6,7 @@ import { AccountForm } from "../../components";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { loginUser, currentUser } from "../../services/slices/authSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Login = () => {
   const [userInput, setUserInput] = useState({
@@ -55,7 +55,7 @@ export const Login = () => {
             value={userInput.email}
             placeholder={"E-mail"}
             name="email"
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
           />
           <Input
             value={userInput.password}
@@ -63,7 +63,7 @@ export const Login = () => {
             icon={type === "password" ? "ShowIcon" : "HideIcon"}
             type={type}
             name="password"
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
             onIconClick={() => togglePassword()}
           />
           <Button htmlType="submit">Войти</Button>
@@ -73,11 +73,11 @@ export const Login = () => {
         <>
           <span className="text text_type_main-default text_color_inactive">
             Вы — новый пользователь?
-            <a href="/register"> Зарегистрироваться</a>
+            <Link to="/register"> Зарегистрироваться</Link>
           </span>
           <span className="text text_type_main-default text_color_inactive">
             Забыли пароль?
-            <a href="/forgot-password"> Восстановить пароль</a>
+            <Link to="/forgot-password"> Восстановить пароль</Link>
           </span>
         </>
       }

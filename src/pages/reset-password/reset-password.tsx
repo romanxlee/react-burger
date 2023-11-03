@@ -5,7 +5,7 @@ import {
 import { AccountForm } from "../../components";
 import { useState } from "react";
 import { passwordReset } from "../../services/api";
-import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import { useNavigate, useLocation, Navigate, Link } from "react-router-dom";
 
 export const ResetPassword = () => {
   const [password, setPassword] = useState("");
@@ -45,7 +45,7 @@ export const ResetPassword = () => {
         <>
           <span className="text text_type_main-default text_color_inactive">
             Вспомнили пароль?
-            <a href="/login"> Войти</a>
+            <Link to="/login"> Войти</Link>
           </span>
         </>
       }

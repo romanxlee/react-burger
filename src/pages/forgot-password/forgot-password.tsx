@@ -5,15 +5,16 @@ import {
 import { AccountForm } from "../../components";
 import { useState } from "react";
 import { passwordForgot } from "../../services/api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 export const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = async () => {
     const res = await passwordForgot(email);
-    if (res.success) navigate("/reset-password");
+    if (res.success) navigate("/reset-password", { state: { from: location } });
   };
 
   return (
@@ -41,7 +42,7 @@ export const ForgotPassword = () => {
         <>
           <span className="text text_type_main-default text_color_inactive">
             Вспомнили пароль?
-            <a href="/login"> Войти</a>
+            <Link to="/login"> Войти</Link>
           </span>
         </>
       }

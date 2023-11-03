@@ -9,8 +9,7 @@ import {
   logoutUser,
   userUpdate,
 } from "../../services/slices/authSlice";
-import { useNavigate, Link, useLocation } from "react-router-dom";
-import { deleteCookie, getCookie } from "../../utils/cookie";
+import { Link, useLocation } from "react-router-dom";
 
 import styles from "./profile.module.css";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -22,7 +21,6 @@ export const Profile = () => {
   const [userInput, setUserInput] = useState(user as User);
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const location = useLocation();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,10 +32,7 @@ export const Profile = () => {
   };
 
   const handleLogout = async () => {
-    const token = getCookie("token");
-    token && (await dispatch(logoutUser(token)));
-    deleteCookie("token");
-    navigate("/login", { replace: true });
+    await dispatch(logoutUser());
   };
 
   useEffect(() => {
@@ -69,12 +64,12 @@ export const Profile = () => {
         >
           История заказов
         </Link>
-        <span
-          className="text text_type_main-default text_color_inactive pt-5 pb-5"
+        <button
+          className={`${styles.button} text text_type_main-default text_color_inactive pt-5 pb-5`}
           onClick={() => handleLogout()}
         >
           Выход
-        </span>
+        </button>
 
         <span className="text text_type_main-small text_color_inactive mt-20">
           В этом разделе вы можете изменить свои персональные данные

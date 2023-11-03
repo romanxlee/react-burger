@@ -33,8 +33,18 @@ function App() {
         <AppHeader />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route
+            path="/login"
+            element={
+              <ProtectedRouteElement onlyUnAuth={true} element={<Login />} />
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <ProtectedRouteElement onlyUnAuth={true} element={<Register />} />
+            }
+          />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route
