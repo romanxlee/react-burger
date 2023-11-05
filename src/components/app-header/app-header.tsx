@@ -1,28 +1,67 @@
-import AppHeaderStyles from './app-header.module.css'
-import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import AppHeaderStyles from "./app-header.module.css";
+import {
+  Logo,
+  BurgerIcon,
+  ListIcon,
+  ProfileIcon,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link } from "react-router-dom";
+import { useMatch } from "react-router-dom";
 
 const AppHeader = () => {
-    return (
-        <header className={`${AppHeaderStyles.header} p-4`}>
-            <div className={`${AppHeaderStyles.container} ${AppHeaderStyles.flexBasis}`}>
-                <a href="/" className={AppHeaderStyles.link}>
-                    <BurgerIcon type="primary"/>
-                    <span className="text text_type_main-default m-2">Конструктор</span>
-                </a>
-                <a href="/" className={AppHeaderStyles.link}>
-                    <ListIcon type="secondary" />
-                    <span className="text text_type_main-default text_color_inactive m-2">Лента заказов</span>
-                </a>
-            </div>
-            <a href="/" className={`${AppHeaderStyles.link} ${AppHeaderStyles.flexBasis} ${AppHeaderStyles.logo}`}>
-                <Logo />
-            </a>
-            <a href="/" className={`${AppHeaderStyles.link} ${AppHeaderStyles.flexBasis} ${AppHeaderStyles.lastLink}`}>
-                <ProfileIcon type="secondary" />
-                <span className="text text_type_main-default text_color_inactive m-2">Личный кабинет</span>
-            </a>
-        </header>
-    )
-}
+  return (
+    <header
+      className={`${AppHeaderStyles.header} ${!useMatch("/") && "mb-30"} p-4`}
+    >
+      <div
+        className={`${AppHeaderStyles.container} ${AppHeaderStyles.flexBasis}`}
+      >
+        <Link to="/" className={AppHeaderStyles.link}>
+          <BurgerIcon type={useMatch("/") ? "primary" : "secondary"} />
+          <span
+            className={`${
+              useMatch("/") ? "text_color_primary" : "text_color_inactive"
+            } text text_type_main-default m-2`}
+          >
+            Конструктор
+          </span>
+        </Link>
+        <Link to="/profile/orders" className={AppHeaderStyles.link}>
+          <ListIcon
+            type={useMatch("/profile/orders") ? "primary" : "secondary"}
+          />
+          <span
+            className={`${
+              useMatch("/profile/orders")
+                ? "text_color_primary"
+                : "text_color_inactive"
+            } text text_type_main-default m-2`}
+          >
+            Лента заказов
+          </span>
+        </Link>
+      </div>
+      <Link
+        to="/"
+        className={`${AppHeaderStyles.link} ${AppHeaderStyles.flexBasis} ${AppHeaderStyles.logo}`}
+      >
+        <Logo />
+      </Link>
+      <Link
+        to="/profile"
+        className={`${AppHeaderStyles.link} ${AppHeaderStyles.flexBasis} ${AppHeaderStyles.lastLink}`}
+      >
+        <ProfileIcon type={useMatch("/profile") ? "primary" : "secondary"} />
+        <span
+          className={`${
+            useMatch("/profile") ? "text_color_primary" : "text_color_inactive"
+          } text text_type_main-default m-2`}
+        >
+          Личный кабинет
+        </span>
+      </Link>
+    </header>
+  );
+};
 
-export default AppHeader
+export default AppHeader;

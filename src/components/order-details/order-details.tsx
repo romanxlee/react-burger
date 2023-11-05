@@ -1,13 +1,14 @@
-import OrderCheckmark from "../order-checkmark/order-checkmark";
+import { OrderCheckmark } from "../order-checkmark/order-checkmark";
 import OrderDetailsStyles from "./order-details.module.css";
 
 import { useAppSelector } from "../../hooks";
-import { orderDetail } from "../../services/slices/orderSlice";
+import { orderDetail, orderStatus } from "../../services/slices/orderSlice";
 
-const OrderDetails = () => {
-  const order = useAppSelector(orderDetail)
+export const OrderDetails = () => {
+  const order = useAppSelector(orderDetail);
+  const status = useAppSelector(orderStatus);
 
-  return (
+  return status === "succeeded" ? (
     <>
       <span
         className={`${OrderDetailsStyles.number} text text_type_digits-large`}
@@ -27,7 +28,7 @@ const OrderDetails = () => {
         </span>
       </div>
     </>
+  ) : (
+    <div>Формирование заказа...</div>
   );
 };
-
-export default OrderDetails;

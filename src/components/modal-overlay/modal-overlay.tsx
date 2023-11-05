@@ -6,7 +6,7 @@ type Props = {
   onClick: MouseEventHandler;
 };
 
-const ModalOverlay: FC<Props> = ({ children, onClick }) => {
+export const ModalOverlay: FC<Props> = ({ children, onClick }) => {
   const onContainerClick = (event: MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
   };
@@ -20,5 +20,3 @@ const ModalOverlay: FC<Props> = ({ children, onClick }) => {
     </div>
   );
 };
-
-export default ModalOverlay;

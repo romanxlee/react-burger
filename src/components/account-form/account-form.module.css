@@ -1,0 +1,25 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 24px;
+}
+
+.additional {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 16px;
+    margin-top: 80px;
+
+    & a {
+        color: #4C4CFF;
+        text-decoration: none;
+    }
+}

@@ -1,44 +1,64 @@
-import { useEffect } from "react";
-
 import AppStyles from "./app.module.css";
 
 import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
+import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import { ProtectedRouteElement } from "../protected-route-element/protected-route-element";
+import { useAppDispatch } from "../../hooks";
+import { userInfo } from "../../services/slices/authSlice";
+import { fetchIngredientsAsync } from "../../services/slices/ingredientsSlice";
+import { useEffect } from "react";
 
-import { useAppSelector, useAppDispatch } from "../../hooks";
-
-import { fetchIngredientsAsync, selectIngredients } from "../../services/slices/ingredientsSlice";
-
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import {
+  Home,
+  Login,
+  Register,
+  ForgotPassword,
+  ResetPassword,
+  Profile,
+  Ingredients,
+  NotFound,
+} from "../../pages";
 
 function App() {
-    const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-    const ingredients = useAppSelector(selectIngredients);
-    const status = useAppSelector((state) => state.ingredients.status);
-    const error = useAppSelector((state) => state.ingredients.error);
-
-    useEffect(() => {
-        dispatch(fetchIngredientsAsync());
-    }, [dispatch]);
-
-    if (status === 'loading') {
-        return <div>Loading...</div>
-    } else if (status === 'failed') {
-        return <div>Error: {error}</div>
-    }
+  useEffect(() => {
+    dispatch(userInfo());
+    dispatch(fetchIngredientsAsync());
+  }, [dispatch]);
 
   return (
     <div className={AppStyles.app}>
-      <AppHeader />
-            <main className={AppStyles.main}>
-                <DndProvider backend={HTML5Backend}>
-                    {ingredients.length && <BurgerIngredients ingredients={ingredients}/>}
-                    <BurgerConstructor />
-                </DndProvider>
-            </main>
+      <Router>
+        <AppHeader />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/login"
+            element={
+              <ProtectedRouteElement onlyUnAuth={true} element={<Login />} />
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <ProtectedRouteElement onlyUnAuth={true} element={<Register />} />
+            }
+          />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route
+            path="/profile"
+            element={<ProtectedRouteElement element={<Profile />} />}
+          >
+            <Route path="orders" element={<Profile />}>
+              <Route path=":orderId" element={<Profile />} />
+            </Route>
+          </Route>
+          <Route path="/ingredients/:id" element={<Ingredients />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

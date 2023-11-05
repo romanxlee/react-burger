@@ -2,12 +2,13 @@ import { useState, type FC, useEffect, useRef } from "react";
 import BurgerIngredientsStyles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import type { Ingredient } from "../../types";
-import Modal from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import IngredientCard from "../ingredient/ingredient";
+import { Modal, IngredientDetails, IngredientCard } from "../../components";
 import { useModal, useAppDispatch } from "../../hooks";
 
-import { setCurrentIngredient, unsetCurrentIngredient } from "../../services/slices/ingredientsSlice";
+import {
+  setCurrentIngredient,
+  unsetCurrentIngredient,
+} from "../../services/slices/ingredientsSlice";
 
 const TABS = ["Булки", "Соусы", "Начинки"];
 
@@ -15,7 +16,7 @@ type Props = {
   ingredients: Ingredient[];
 };
 
-const BurgerIngredients: FC<Props> = (props) => {
+export const BurgerIngredients: FC<Props> = (props) => {
   const [current, setCurrent] = useState("Булки");
 
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -27,38 +28,44 @@ const BurgerIngredients: FC<Props> = (props) => {
   const dispatch = useAppDispatch();
 
   const handleClick = (value: Ingredient) => {
+    window.history.pushState(
+      null,
+      "Stellar Burgers",
+      `ingredients/${value._id}`,
+    );
     openModal();
     dispatch(setCurrentIngredient(value));
   };
 
   const handleClose = () => {
+    window.history.pushState(null, "Stellar Burgers", `/`);
     dispatch(unsetCurrentIngredient());
-    closeModal()
-  }
+    closeModal();
+  };
 
   const handleScroll = () => {
-    const ingredientSections = document.querySelectorAll('section');
+    const ingredientSections = document.querySelectorAll("section");
     let closestIndex = -1;
     let closestDistance = Infinity;
     ingredientSections.forEach((section, index) => {
-      const rect = section.getBoundingClientRect()
-      const distance = ((rect.top) * (rect.top) + rect.left * rect.left);
+      const rect = section.getBoundingClientRect();
+      const distance = rect.top * rect.top + rect.left * rect.left;
       if (distance < closestDistance) {
         closestDistance = distance;
         closestIndex = index;
       }
-    })
+    });
 
     setCurrent(TABS[closestIndex]);
-  }
+  };
 
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (containerRef.current) {
-      containerRef.current.addEventListener('scroll', handleScroll);
+      containerRef.current.addEventListener("scroll", handleScroll);
     }
-  }, [])
+  }, []);
 
   return (
     <div>
@@ -80,7 +87,11 @@ const BurgerIngredients: FC<Props> = (props) => {
           <h4 className="text text_type_main-medium">Булки</h4>
           <div className={BurgerIngredientsStyles.container}>
             {BUNS.map((bun) => (
-                <IngredientCard key={bun._id} ingredient={bun} onCLick={() => handleClick(bun)} />
+              <IngredientCard
+                key={bun._id}
+                ingredient={bun}
+                onCLick={() => handleClick(bun)}
+              />
             ))}
           </div>
         </section>
@@ -89,7 +100,11 @@ const BurgerIngredients: FC<Props> = (props) => {
           <h4 className="text text_type_main-medium">Соусы</h4>
           <div className={BurgerIngredientsStyles.container}>
             {SAUCES.map((sauce) => (
-                <IngredientCard key={sauce._id} ingredient={sauce} onCLick={() => handleClick(sauce)} />
+              <IngredientCard
+                key={sauce._id}
+                ingredient={sauce}
+                onCLick={() => handleClick(sauce)}
+              />
             ))}
           </div>
         </section>
@@ -98,7 +113,11 @@ const BurgerIngredients: FC<Props> = (props) => {
           <h4 className="text text_type_main-medium">Начинки</h4>
           <div className={BurgerIngredientsStyles.container}>
             {MAINS.map((main) => (
-                <IngredientCard key={main._id} ingredient={main} onCLick={() => handleClick(main)} />
+              <IngredientCard
+                key={main._id}
+                ingredient={main}
+                onCLick={() => handleClick(main)}
+              />
             ))}
           </div>
         </section>
@@ -113,5 +132,3 @@ const BurgerIngredients: FC<Props> = (props) => {
     </div>
   );
 };
-
-export default BurgerIngredients;
