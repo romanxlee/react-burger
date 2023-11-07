@@ -55,7 +55,7 @@ export const registrationSlice = createSlice({
       .addCase(registerUser.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(registerUser.fulfilled, (state, action) => {
+      .addCase(registerUser.fulfilled, (state) => {
         state.status = "succeeded";
       })
       .addCase(registerUser.rejected, (state, action) => {
@@ -78,7 +78,7 @@ export const registrationSlice = createSlice({
       .addCase(logoutUser.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(logoutUser.fulfilled, (state, action) => {
+      .addCase(logoutUser.fulfilled, (state) => {
         state.status = "succeeded";
         state.user = null;
       })
