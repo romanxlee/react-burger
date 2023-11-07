@@ -23,7 +23,7 @@ export const IngredientCard: FC<Props> = (props) => {
     type: "ingredient",
     item: props.ingredient,
     collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
+      isDragging: monitor.isDragging(),
     }),
   });
 
