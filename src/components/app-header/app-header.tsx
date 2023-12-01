@@ -26,7 +26,7 @@ const AppHeader = () => {
             Конструктор
           </span>
         </Link>
-        <Link to="/profile/orders" className={AppHeaderStyles.link}>
+        <Link to="/feed" className={AppHeaderStyles.link}>
           <ListIcon
             type={useMatch("/profile/orders") ? "primary" : "secondary"}
           />

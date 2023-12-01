@@ -6,3 +6,4 @@ export * from "./register/register";
 export * from "./reset-password/reset-password";
 export * from "./indgredients/ingredients";
 export * from "./not-found/not-found";
+export * from "./feed/feed";

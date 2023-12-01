@@ -17,6 +17,7 @@ import {
   Profile,
   Ingredients,
   NotFound,
+  Feed,
 } from "../../pages";
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
             </Route>
           </Route>
           <Route path="/ingredients/:id" element={<Ingredients />} />
+          <Route path="/feed" element={<Feed />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
