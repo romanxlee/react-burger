@@ -47,6 +47,10 @@ export type FeedOrder = {
   updatedAt: string;
 };
 
+export interface FeedOrderCard extends FeedOrder {
+  image: string;
+}
+
 export type WebSocketMassage = {
   orders: FeedOrder[];
   success: boolean;
@@ -58,5 +62,4 @@ export enum WebSocketStatus {
   OFFLINE = "OFFLINE",
   ONLINE = "ONLINE",
   CONNECTING = "CONNECTING",
-  CLOSING = "CLOSING",
 }

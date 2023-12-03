@@ -2,3 +2,15 @@
     display: flex;
     justify-content: center;
 }
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.orders {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}

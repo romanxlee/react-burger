@@ -7,6 +7,7 @@ import {
   wsError,
   wsOpen,
 } from "../actions/feed";
+import { RootState } from "../slices/";
 
 type FeedOrdersState = {
   status: WebSocketStatus;
@@ -64,3 +65,7 @@ const feedReducer = createReducer(initialState, (builder) => {
       return state;
     });
 });
+
+export const feedOrders = (state: RootState) => state.feed.orders;
+
+export default feedReducer;
