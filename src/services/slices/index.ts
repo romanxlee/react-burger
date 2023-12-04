@@ -5,6 +5,7 @@ import authReducer from "./authSlice";
 import { socketMiddleware } from "../middleware/socket-middleware";
 import { combineReducers } from "@reduxjs/toolkit";
 import feedReducer from "../reducers/feed";
+import profileOrdersReducer from "../reducers/profileOrders";
 
 import {
   connect as feedConnect,
@@ -51,6 +52,7 @@ const rootReducer = combineReducers({
   orders: ordersReducer,
   auth: authReducer,
   feed: feedReducer,
+  profileOrders: profileOrdersReducer,
 });
 
 export const store = configureStore({

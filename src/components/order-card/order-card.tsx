@@ -8,9 +8,10 @@ import { v4 as uuid } from "uuid";
 
 type Props = {
   order: FeedOrder;
+  isProfile?: boolean;
 };
 
-export const OrderCard: FC<Props> = ({ order }) => {
+export const OrderCard: FC<Props> = ({ order, isProfile }) => {
   const ingredients = useAppSelector(selectIngredients);
   const { ingredientsData, restAmount, allIngredients } = useMemo(() => {
     const allIngredients = order.ingredients
@@ -37,6 +38,12 @@ export const OrderCard: FC<Props> = ({ order }) => {
       allIngredients: allIngredients,
     };
   }, []);
+
+  const ordersStatuses: Record<string, string> = {
+    done: "Выполнен",
+    pending: "Готовится",
+  };
+
   return (
     <div className={styles.card}>
       <div className={styles.cardSection}>
@@ -48,6 +55,15 @@ export const OrderCard: FC<Props> = ({ order }) => {
         </span>
       </div>
       <span className="text text_type_main-small">{order.name}</span>
+      {isProfile && (
+        <span
+          className={`${
+            order.status === "done" && "text_color_success"
+          } text text_type_main-small`}
+        >
+          {ordersStatuses[order.status]}
+        </span>
+      )}
       <div className={styles.cardSection}>
         <div className={styles.ingredients}>
           {ingredientsData &&

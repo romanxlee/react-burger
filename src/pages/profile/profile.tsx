@@ -2,7 +2,7 @@ import {
   Input,
   Button as YaButton,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { AccountForm } from "../../components";
+import { AccountForm, ProfileOrders } from "../../components";
 import { useAppSelector, useAppDispatch } from "../../hooks";
 import {
   currentUser,
@@ -71,52 +71,59 @@ export const Profile = () => {
         </button>
 
         <span className="text text_type_main-small text_color_inactive mt-20">
-          В этом разделе вы можете изменить свои персональные данные
+          В этом разделе вы можете{" "}
+          {useMatch("/profile")
+            ? "изменить свои персональные данные"
+            : "просмотреть свою историю заказов"}
         </span>
       </div>
-      <AccountForm
-        onSubmit={async () => {
-          await dispatch(userUpdate(userInput));
-        }}
-        inputs={
-          <>
-            <Input
-              value={userInput.name}
-              icon="EditIcon"
-              placeholder={"Имя"}
-              name="name"
-              onChange={(e) => handleChange(e)}
-            />
-            <Input
-              value={userInput.email}
-              placeholder={"E-mail"}
-              icon="EditIcon"
-              name="email"
-              onChange={(e) => handleChange(e)}
-            />
-            <Input
-              value={userInput.password || ""}
-              placeholder={"Пароль"}
-              icon="EditIcon"
-              name="password"
-              onChange={(e) => handleChange(e)}
-            />
-            {buttonsVisible && (
-              <div className={styles.buttons}>
-                <button
-                  className={`${styles.button} text text_type_main-default text_color_accent`}
-                  onClick={() => setUserInput(user as User)}
-                >
-                  Отмена
-                </button>
-                <YaButton htmlType="submit" type="primary">
-                  Сохранить
-                </YaButton>
-              </div>
-            )}
-          </>
-        }
-      />
+      {useMatch("/profile") ? (
+        <AccountForm
+          onSubmit={async () => {
+            await dispatch(userUpdate(userInput));
+          }}
+          inputs={
+            <>
+              <Input
+                value={userInput.name}
+                icon="EditIcon"
+                placeholder={"Имя"}
+                name="name"
+                onChange={(e) => handleChange(e)}
+              />
+              <Input
+                value={userInput.email}
+                placeholder={"E-mail"}
+                icon="EditIcon"
+                name="email"
+                onChange={(e) => handleChange(e)}
+              />
+              <Input
+                value={userInput.password || ""}
+                placeholder={"Пароль"}
+                icon="EditIcon"
+                name="password"
+                onChange={(e) => handleChange(e)}
+              />
+              {buttonsVisible && (
+                <div className={styles.buttons}>
+                  <button
+                    className={`${styles.button} text text_type_main-default text_color_accent`}
+                    onClick={() => setUserInput(user as User)}
+                  >
+                    Отмена
+                  </button>
+                  <YaButton htmlType="submit" type="primary">
+                    Сохранить
+                  </YaButton>
+                </div>
+              )}
+            </>
+          }
+        />
+      ) : (
+        <ProfileOrders />
+      )}
       <div />
     </div>
   );
