@@ -1,5 +1,5 @@
 import styles from "./feed.module.css";
-import { OrderCard } from "../../components";
+import { OrderCard, OrderStats } from "../../components";
 import { feedOrders } from "../../services/reducers/feed";
 
 import {
@@ -11,7 +11,7 @@ import { useEffect } from "react";
 
 export const Feed = () => {
   const dispatch = useAppDispatch();
-  const orders = useAppSelector(feedOrders)?.orders;
+  const feedData = useAppSelector(feedOrders);
 
   useEffect(() => {
     dispatch(connectFeed("ws://norma.nomoreparties.space/orders/all"));
@@ -27,12 +27,16 @@ export const Feed = () => {
         <h1 className="text text_type_main-large">Лента заказов</h1>
         <div className={styles.container}>
           <div className={styles.orders}>
-            {orders &&
-              orders.map((order) => (
+            {feedData &&
+              feedData.orders.map((order) => (
                 <OrderCard key={order._id} order={order} />
               ))}
           </div>
-          <div></div>
+          <OrderStats
+            orders={feedData?.orders}
+            amountTotal={feedData?.total}
+            amountToday={feedData?.totalToday}
+          />
         </div>
       </div>
     </div>

@@ -1,0 +1,24 @@
+.amount {
+    display: flex;
+    flex-direction: column;
+}
+
+.ordersStats {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 36px;
+}
+
+.ordersList {
+    display: flex;
+    flex-flow: wrap column;
+    list-style: none;
+    padding: 0;
+    max-height: 195px;
+}
+
+.orderNumber {
+    display: inline-block;
+    margin-right: 20px;
+}
