@@ -12,3 +12,5 @@ export * from "./protected-route-element/protected-route-element";
 export * from "./order-card/order-card";
 export * from "./orders-stats/order-stats";
 export * from "./profile-orders/profile-orders";
+export * from "./order-info/order-info";
+export * from "./order-ingredient/order-ingredient";

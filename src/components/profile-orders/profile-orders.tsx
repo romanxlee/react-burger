@@ -27,7 +27,12 @@ export const ProfileOrders = () => {
     <div>
       {orders &&
         orders.orders.map((order) => (
-          <OrderCard key={order._id} order={order} isProfile />
+          <OrderCard
+            key={order._id}
+            order={order}
+            isProfile
+            onClick={() => {}}
+          />
         ))}
     </div>
   );

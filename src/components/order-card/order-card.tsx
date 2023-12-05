@@ -9,9 +9,10 @@ import { v4 as uuid } from "uuid";
 type Props = {
   order: FeedOrder;
   isProfile?: boolean;
+  onClick: () => void;
 };
 
-export const OrderCard: FC<Props> = ({ order, isProfile }) => {
+export const OrderCard: FC<Props> = ({ order, isProfile, onClick }) => {
   const ingredients = useAppSelector(selectIngredients);
   const { ingredientsData, restAmount, allIngredients } = useMemo(() => {
     const allIngredients = order.ingredients
@@ -42,10 +43,11 @@ export const OrderCard: FC<Props> = ({ order, isProfile }) => {
   const ordersStatuses: Record<string, string> = {
     done: "Выполнен",
     pending: "Готовится",
+    created: "Создан",
   };
 
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={() => onClick()}>
       <div className={styles.cardSection}>
         <span className="text text_type_digits-default text_type_main-small">
           {"#" + order.number}
