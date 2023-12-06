@@ -37,26 +37,30 @@ export const Feed = () => {
 
   return (
     <div className={styles.feed}>
-      <div>
-        <h1 className="text text_type_main-large">Лента заказов</h1>
-        <div className={styles.container}>
-          <div className={styles.orders}>
-            {feedData &&
-              feedData.orders.map((order) => (
-                <OrderCard
-                  key={order._id}
-                  order={order}
-                  onClick={() => handleClick(order)}
-                />
-              ))}
+      {feedData ? (
+        <div>
+          <h1 className="text text_type_main-large">Лента заказов</h1>
+          <div className={styles.container}>
+            <div className={styles.orders}>
+              {feedData &&
+                feedData.orders.map((order) => (
+                  <OrderCard
+                    key={order._id}
+                    order={order}
+                    onClick={() => handleClick(order)}
+                  />
+                ))}
+            </div>
+            <OrderStats
+              orders={feedData?.orders}
+              amountTotal={feedData?.total}
+              amountToday={feedData?.totalToday}
+            />
           </div>
-          <OrderStats
-            orders={feedData?.orders}
-            amountTotal={feedData?.total}
-            amountToday={feedData?.totalToday}
-          />
         </div>
-      </div>
+      ) : (
+        <span>Загрузка...</span>
+      )}
       {isModalOpen && order && (
         <Modal
           onClose={handleClose}

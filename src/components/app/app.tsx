@@ -56,13 +56,12 @@ function App() {
             <Route path="orders" element={<Profile />} />
           </Route>
           <Route path="/ingredients/:id" element={<Ingredients />} />
-          <Route path="/feed" element={<Feed />}>
-            <Route path=":id" element={<OrderInfo />} />
-          </Route>
+          <Route path="/feed" element={<Feed />} />
           <Route
             path="/profile/orders/:id"
             element={<ProtectedRouteElement element={<OrderInfo />} />}
           />
+          <Route path="/feed/:id" element={<OrderInfo />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

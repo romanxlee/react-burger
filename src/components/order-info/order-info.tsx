@@ -29,7 +29,7 @@ export const OrderInfo: FC<Props> = ({ number, isModal }) => {
   const ingredients = useAppSelector(selectIngredients);
 
   const getInfo = async () => {
-    const res = await getOrderInfo(number || id!);
+    const res = await getOrderInfo(number ? number : id!);
     setOrder(res);
   };
 
@@ -57,7 +57,7 @@ export const OrderInfo: FC<Props> = ({ number, isModal }) => {
 
   useEffect(() => {
     getInfo();
-  }, [id]);
+  }, [number, id]);
 
   return (
     <div className={(isModal && styles.modal, styles.root)}>
