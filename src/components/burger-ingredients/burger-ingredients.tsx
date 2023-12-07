@@ -1,29 +1,28 @@
-import { useState, type FC, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import BurgerIngredientsStyles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import type { Ingredient } from "../../types";
 import { Modal, IngredientDetails, IngredientCard } from "../../components";
-import { useModal, useAppDispatch } from "../../hooks";
+import { useModal, useAppDispatch, useAppSelector } from "../../hooks";
 
 import {
+  selectIngredients,
   setCurrentIngredient,
   unsetCurrentIngredient,
 } from "../../services/slices/ingredientsSlice";
 
 const TABS = ["Булки", "Соусы", "Начинки"];
 
-type Props = {
-  ingredients: Ingredient[];
-};
-
-export const BurgerIngredients: FC<Props> = (props) => {
+export const BurgerIngredients = () => {
   const [current, setCurrent] = useState("Булки");
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const BUNS = props.ingredients.filter((item) => item.type === "bun");
-  const SAUCES = props.ingredients.filter((item) => item.type === "sauce");
-  const MAINS = props.ingredients.filter((item) => item.type === "main");
+  const ingredients = useAppSelector(selectIngredients);
+
+  const BUNS = ingredients.filter((item) => item.type === "bun");
+  const SAUCES = ingredients.filter((item) => item.type === "sauce");
+  const MAINS = ingredients.filter((item) => item.type === "main");
 
   const dispatch = useAppDispatch();
 

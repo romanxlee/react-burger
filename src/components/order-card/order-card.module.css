@@ -8,6 +8,7 @@
     padding: 24px;
     width: 584px;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 .cardSection {

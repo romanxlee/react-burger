@@ -10,6 +10,7 @@ import { profileOrders } from "../../services/reducers/profileOrders";
 import { FeedOrder } from "../../types";
 import { Modal } from "../modal/modal";
 import { OrderInfo } from "../order-info/order-info";
+import styles from "./profile-orders.module.css";
 
 export const ProfileOrders = () => {
   const dispatch = useAppDispatch();
@@ -44,7 +45,7 @@ export const ProfileOrders = () => {
   }, []);
 
   return (
-    <div>
+    <div className={styles.root}>
       {orders &&
         orders.orders.map((order) => (
           <OrderCard
