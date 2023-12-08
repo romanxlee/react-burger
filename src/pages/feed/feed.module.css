@@ -1,0 +1,31 @@
+.feed {
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    gap: 60px;
+}
+
+.orders {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: 100vh;
+    overflow-y: scroll;
+    padding-right: 8px;
+}
+
+.orders::-webkit-scrollbar {
+    width: 8px;
+}
+
+.orders::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+.orders::-webkit-scrollbar-thumb {
+    background: #8585AD;
+}

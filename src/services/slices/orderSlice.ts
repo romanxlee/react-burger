@@ -30,7 +30,6 @@ const orderSlice = createSlice({
       })
       .addCase(fetchOrder.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload);
         state.order = action.payload;
       })
       .addCase(fetchOrder.rejected, (state, action) => {

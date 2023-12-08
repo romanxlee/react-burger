@@ -1,4 +1,4 @@
-import { BASE_URL } from "../../utils/consts";
+import { request } from "../../utils/checkResponse";
 import { Auth } from "../../types";
 import { deleteCookie, getCookie, setCookie } from "../../utils/cookie";
 export const userRegister = async (
@@ -6,72 +6,49 @@ export const userRegister = async (
   password: string,
   name: string,
 ) => {
-  return fetch(`${BASE_URL}/auth/register`, {
+  return request("auth/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
     },
     body: JSON.stringify({ email: email, password: password, name: name }),
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}: ${res.json()}`);
-    })
-    .then((res) => res as Auth);
+  }).then((res) => res as Auth);
 };
 
 export const userLogin = async (email: string, password: string) => {
-  return fetch(`${BASE_URL}/auth/login`, {
+  return request("auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
     },
     body: JSON.stringify({ email: email, password: password }),
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка ${res.status}`);
-    })
-    .then((res: Auth) => {
-      setCookie("refresh", res.refreshToken, { expires: 1200 });
-      setCookie("access", res.accessToken, { expires: 1200 });
-      return res;
-    });
+  }).then((res: Auth) => {
+    setCookie("refresh", res.refreshToken, { expires: 1200 });
+    setCookie("access", res.accessToken, { expires: 1200 });
+    return res;
+  });
 };
 
 export const refreshToken = async (token: string) => {
-  return fetch(`${BASE_URL}/auth/token`, {
+  return request("auth/token", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
     },
     body: JSON.stringify({ token: token }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка ${res.status}`);
   });
 };
 
 export const userLogout = async () => {
   const token = getCookie("refresh");
-  return fetch(`${BASE_URL}/auth/logout`, {
+  return request("auth/logout", {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
     },
     body: JSON.stringify({ token: token }),
-  }).then((res) => {
-    if (res.ok) {
-      deleteCookie("refresh");
-      deleteCookie("access");
-      return res.json();
-    }
-    return Promise.reject(`Ошибка ${res.status}`);
+  }).then(() => {
+    deleteCookie("refresh");
+    deleteCookie("access");
   });
 };

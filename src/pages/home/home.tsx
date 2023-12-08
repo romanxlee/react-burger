@@ -4,13 +4,10 @@ import { BurgerIngredients, BurgerConstructor } from "../../components";
 
 import { useAppSelector } from "../../hooks";
 
-import { selectIngredients } from "../../services/slices/ingredientsSlice";
-
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 export const Home = () => {
-  const ingredients = useAppSelector(selectIngredients);
   const status = useAppSelector((state) => state.ingredients.status);
   const error = useAppSelector((state) => state.ingredients.error);
 
@@ -23,7 +20,7 @@ export const Home = () => {
   return (
     <main className={HomeStyles.main}>
       <DndProvider backend={HTML5Backend}>
-        {ingredients.length && <BurgerIngredients ingredients={ingredients} />}
+        <BurgerIngredients />
         <BurgerConstructor />
       </DndProvider>
     </main>

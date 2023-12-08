@@ -26,15 +26,11 @@ const AppHeader = () => {
             Конструктор
           </span>
         </Link>
-        <Link to="/profile/orders" className={AppHeaderStyles.link}>
-          <ListIcon
-            type={useMatch("/profile/orders") ? "primary" : "secondary"}
-          />
+        <Link to="/feed" className={AppHeaderStyles.link}>
+          <ListIcon type={useMatch("/feed") ? "primary" : "secondary"} />
           <span
             className={`${
-              useMatch("/profile/orders")
-                ? "text_color_primary"
-                : "text_color_inactive"
+              useMatch("/feed") ? "text_color_primary" : "text_color_inactive"
             } text text_type_main-default m-2`}
           >
             Лента заказов

@@ -36,3 +36,30 @@ export type Auth = {
 };
 
 export type Status = "idle" | "loading" | "succeeded" | "failed";
+
+export type FeedOrder = {
+  _id: string;
+  createdAt: string;
+  ingredients: string[];
+  name: string;
+  number: number;
+  status: string;
+  updatedAt: string;
+};
+
+export interface FeedOrderCard extends FeedOrder {
+  image: string;
+}
+
+export type WebSocketMassage = {
+  orders: FeedOrder[];
+  success: boolean;
+  total: number;
+  totalToday: number;
+};
+
+export enum WebSocketStatus {
+  OFFLINE = "OFFLINE",
+  ONLINE = "ONLINE",
+  CONNECTING = "CONNECTING",
+}

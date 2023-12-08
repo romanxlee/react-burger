@@ -1,0 +1,26 @@
+.root {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.block {
+    display: flex;
+    align-items: center;
+}
+
+.image {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #131316;
+    border: 2px solid #801AB2;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+}

@@ -1,0 +1,33 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.modal {
+    width: 100%;
+}
+
+.number {
+    align-self: center;
+}
+
+.ingredients {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
