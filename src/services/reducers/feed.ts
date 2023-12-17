@@ -15,7 +15,7 @@ type FeedOrdersState = {
   error: string;
 };
 
-const initialState: FeedOrdersState = {
+export const initialState: FeedOrdersState = {
   status: WebSocketStatus.OFFLINE,
   orders: null,
   error: "",
