@@ -32,5 +32,9 @@ describe("template spec", () => {
     getElement("submit").click();
     cy.wait(20000);
     cy.contains("начали готовить").should("be.visible");
+
+    getElement("close").click();
+
+    getElement("modal").should("not.exist");
   });
 });
