@@ -1,7 +1,7 @@
 import AppStyles from "./app.module.css";
 
 import AppHeader from "../app-header/app-header";
-import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
+import { Routes, Route, HashRouter as Router } from "react-router-dom";
 import { ProtectedRouteElement } from "../protected-route-element/protected-route-element";
 import { useAppDispatch } from "../../hooks";
 import { userInfo } from "../../services/slices/authSlice";

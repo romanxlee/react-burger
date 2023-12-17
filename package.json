@@ -2,6 +2,7 @@
   "name": "react-burger",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://romanxlee.github.io/react-burger",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.17.0",
@@ -11,6 +12,7 @@
     "@types/react": "^18.2.16",
     "@types/react-dom": "^18.2.7",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.14.0",
+    "gh-pages": "^6.1.0",
     "jest-environment-jsdom": "^29.7.0",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
@@ -31,7 +33,9 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "cypress": "cypress open cache clear",
-    "test": "jest"
+    "test": "jest",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
