@@ -11,7 +11,7 @@ type AuthState = {
   isAuthChecked: boolean;
 };
 
-const initialState: AuthState = {
+export const initialState: AuthState = {
   user: null,
   status: "idle",
   isAuthChecked: false,
