@@ -16,6 +16,7 @@ import {
 type Props = {
   ingredient: Ingredient;
   onCLick: (ingredient: Ingredient) => void;
+  testId: string;
 };
 
 export const IngredientCard: FC<Props> = (props) => {
@@ -50,6 +51,7 @@ export const IngredientCard: FC<Props> = (props) => {
         opacity: isDragging ? 0.5 : 1,
         cursor: "move",
       }}
+      data-testid={props.testId}
     >
       {count > 0 && <Counter count={count} size="default" extraClass="m-1" />}
       <img
