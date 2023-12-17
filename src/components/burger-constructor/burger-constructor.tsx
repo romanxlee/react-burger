@@ -122,6 +122,7 @@ export const BurgerConstructor = () => {
           size="large"
           disabled={!Boolean(bun)}
           onClick={sendOrder}
+          data-testid="submit"
         >
           Оформить заказ
         </Button>

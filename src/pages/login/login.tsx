@@ -56,6 +56,7 @@ export const Login = () => {
             placeholder={"E-mail"}
             name="email"
             onChange={handleChange}
+            data-testid="login-email"
           />
           <Input
             value={userInput.password}
@@ -65,8 +66,11 @@ export const Login = () => {
             name="password"
             onChange={handleChange}
             onIconClick={() => togglePassword()}
+            data-testid="login-password"
           />
-          <Button htmlType="submit">Войти</Button>
+          <Button htmlType="submit" data-testid="login-submit">
+            Войти
+          </Button>
         </>
       }
       additional={
