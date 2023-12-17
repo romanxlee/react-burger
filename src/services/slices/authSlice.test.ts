@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import authReducer, { initialState } from "./authSlice";
 
 describe("orderFeedActionsSlice", () => {
