@@ -3,7 +3,7 @@ describe("template spec", () => {
     return cy.get(`[data-testid=${selector}]`);
   };
   before(function () {
-    cy.visit("http://localhost:3000");
+    cy.visit("/");
   });
 
   it("should render correctly", () => {
@@ -12,7 +12,7 @@ describe("template spec", () => {
   });
 
   it("should create order correctly", () => {
-    cy.visit("/login");
+    cy.visit("/#/login");
     getElement("login-email").type("test_user@te.ru");
     getElement("login-password").type("pass");
     getElement("login-submit").click();

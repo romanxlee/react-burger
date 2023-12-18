@@ -17,7 +17,7 @@ export const Feed = () => {
   const [order, setOrder] = useState<FeedOrder>();
 
   useEffect(() => {
-    dispatch(connectFeed("ws://norma.nomoreparties.space/orders/all"));
+    dispatch(connectFeed("wss://norma.nomoreparties.space/orders/all"));
 
     return () => {
       dispatch(disconnectFeed());

@@ -30,7 +30,7 @@ export const BurgerIngredients = () => {
     window.history.pushState(
       null,
       "Stellar Burgers",
-      `ingredients/${value._id}`,
+      `#/ingredients/${value._id}`,
     );
     openModal();
     dispatch(setCurrentIngredient(value));

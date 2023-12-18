@@ -13,6 +13,7 @@ import ingredientsReducer, {
   currentIngredient,
 } from "./ingredientsSlice";
 import { AnyAction } from "redux";
+import { TEST_DATA } from "../../utils/consts";
 
 describe("ingredientsSlice", () => {
   let store: EnhancedStore;
@@ -32,88 +33,28 @@ describe("ingredientsSlice", () => {
   });
 
   test("keepBun should update the chosenBun state", () => {
-    const bun = {
-      id: "abc123",
-      _id: "abc123",
-      name: "bun",
-      type: "bun",
-      proteins: 11,
-      fat: 11,
-      carbohydrates: 11,
-      calories: 11,
-      price: 123,
-      image: "image.com",
-      image_mobile: "image.com",
-      image_large: "image.com",
-      __v: 123,
-    };
-    store.dispatch(keepBun(bun));
+    store.dispatch(keepBun(TEST_DATA));
     const selectedBun = chosenBun(store.getState());
-    expect(selectedBun).toEqual(bun);
+    expect(selectedBun).toEqual(TEST_DATA);
   });
 
   test("keepIngredient should update the chosenIngredients state", () => {
-    const ingredient = {
-      id: "abc123",
-      _id: "abc123",
-      name: "bun",
-      type: "bun",
-      proteins: 11,
-      fat: 11,
-      carbohydrates: 11,
-      calories: 11,
-      price: 123,
-      image: "image.com",
-      image_mobile: "image.com",
-      image_large: "image.com",
-      __v: 123,
-    };
-    store.dispatch(keepIngredient(ingredient));
+    store.dispatch(keepIngredient(TEST_DATA));
     const selectedIngredient = chosenIngredients(store.getState());
     expect(selectedIngredient.length).toEqual(1);
   });
 
   test("deleteIngredient should update the chosenIngredients state", () => {
-    const ingredient = {
-      id: "abc123",
-      _id: "abc123",
-      name: "bun",
-      type: "bun",
-      proteins: 11,
-      fat: 11,
-      carbohydrates: 11,
-      calories: 11,
-      price: 123,
-      image: "image.com",
-      image_mobile: "image.com",
-      image_large: "image.com",
-      __v: 123,
-    };
-    store.dispatch(keepIngredient(ingredient));
+    store.dispatch(keepIngredient(TEST_DATA));
     const selectedIngredient = chosenIngredients(store.getState());
     expect(selectedIngredient.length).toEqual(1);
-    store.dispatch(deleteIngredient(ingredient));
+    store.dispatch(deleteIngredient(TEST_DATA));
     const selectedIngredientAfterDelete = chosenIngredients(store.getState());
     expect(selectedIngredientAfterDelete.length).toEqual(0);
   });
 
   test("reorderIngredient should update the chosenIngredients state", () => {
-    const ingredient = {
-      id: "abc123",
-      _id: "abc123",
-      name: "bun",
-      type: "bun",
-      proteins: 11,
-      fat: 11,
-      carbohydrates: 11,
-      calories: 11,
-      price: 123,
-      image: "image.com",
-      image_mobile: "image.com",
-      image_large: "image.com",
-      __v: 123,
-    };
-    store.dispatch(keepIngredient(ingredient));
+    store.dispatch(keepIngredient(TEST_DATA));
     const selectedIngredient = chosenIngredients(store.getState());
     expect(selectedIngredient.length).toEqual(1);
     store.dispatch(reorderIngredient({ from: 0, to: 1 }));
@@ -122,45 +63,15 @@ describe("ingredientsSlice", () => {
   });
 
   test("setCurrentIngredient should update the currentIngredient state", () => {
-    const ingredient = {
-      id: "abc123",
-      _id: "abc123",
-      name: "bun",
-      type: "bun",
-      proteins: 11,
-      fat: 11,
-      carbohydrates: 11,
-      calories: 11,
-      price: 123,
-      image: "image.com",
-      image_mobile: "image.com",
-      image_large: "image.com",
-      __v: 123,
-    };
-    store.dispatch(setCurrentIngredient(ingredient));
+    store.dispatch(setCurrentIngredient(TEST_DATA));
     const selectedIngredient = currentIngredient(store.getState());
-    expect(selectedIngredient).toEqual(ingredient);
+    expect(selectedIngredient).toEqual(TEST_DATA);
   });
 
   test("unsetCurrentIngredient should update the currentIngredient state", () => {
-    const ingredient = {
-      id: "abc123",
-      _id: "abc123",
-      name: "bun",
-      type: "bun",
-      proteins: 11,
-      fat: 11,
-      carbohydrates: 11,
-      calories: 11,
-      price: 123,
-      image: "image.com",
-      image_mobile: "image.com",
-      image_large: "image.com",
-      __v: 123,
-    };
-    store.dispatch(setCurrentIngredient(ingredient));
+    store.dispatch(setCurrentIngredient(TEST_DATA));
     const selectedIngredient = currentIngredient(store.getState());
-    expect(selectedIngredient).toEqual(ingredient);
+    expect(selectedIngredient).toEqual(TEST_DATA);
     store.dispatch(unsetCurrentIngredient());
     const selectedIngredientAfterUnset = currentIngredient(store.getState());
     expect(selectedIngredientAfterUnset).toEqual(null);
