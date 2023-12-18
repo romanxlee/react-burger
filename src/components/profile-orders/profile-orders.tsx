@@ -23,14 +23,14 @@ export const ProfileOrders = () => {
     window.history.pushState(
       null,
       "Stellar Burgers",
-      `/#/profile/orders/${item.number}`,
+      `#/profile/orders/${item.number}`,
     );
     setOrder(item);
     openModal();
   };
 
   const handleClose = () => {
-    window.history.pushState(null, "Stellar Burgers", `/profile/orders`);
+    window.history.pushState(null, "Stellar Burgers", `#/profile/orders`);
     closeModal();
   };
 

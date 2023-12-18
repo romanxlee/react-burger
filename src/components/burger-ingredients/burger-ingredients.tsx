@@ -37,7 +37,7 @@ export const BurgerIngredients = () => {
   };
 
   const handleClose = () => {
-    window.history.pushState(null, "Stellar Burgers", `/`);
+    window.history.pushState(null, "Stellar Burgers", `#/`);
     dispatch(unsetCurrentIngredient());
     closeModal();
   };
