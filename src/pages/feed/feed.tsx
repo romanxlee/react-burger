@@ -25,7 +25,7 @@ export const Feed = () => {
   }, []);
 
   const handleClick = (item: FeedOrder) => {
-    window.history.pushState(null, "Stellar Burgers", `feed/${item.number}`);
+    window.history.pushState(null, "Stellar Burgers", `/#/feed/${item.number}`);
     setOrder(item);
     openModal();
   };
