@@ -15,7 +15,7 @@ type ProfileOrdersState = {
   error: string;
 };
 
-const initialState: ProfileOrdersState = {
+export const initialState: ProfileOrdersState = {
   status: WebSocketStatus.OFFLINE,
   orders: null,
   error: "",

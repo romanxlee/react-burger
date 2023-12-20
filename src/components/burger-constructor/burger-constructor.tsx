@@ -81,7 +81,11 @@ export const BurgerConstructor = () => {
   };
 
   return (
-    <div className={BurgerConstructorStyles.container} ref={drop}>
+    <div
+      className={BurgerConstructorStyles.container}
+      ref={drop}
+      data-testid="constructor"
+    >
       {bun && (
         <div className={BurgerConstructorStyles.item}>
           <div className={BurgerConstructorStyles.blank} />
@@ -122,6 +126,7 @@ export const BurgerConstructor = () => {
           size="large"
           disabled={!Boolean(bun)}
           onClick={sendOrder}
+          data-testid="submit"
         >
           Оформить заказ
         </Button>

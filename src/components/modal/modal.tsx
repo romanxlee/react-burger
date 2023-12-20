@@ -28,10 +28,10 @@ export const Modal: FC<Props> = ({ title, children, onClose }) => {
         <ModalOverlay
           onClick={onClose}
           children={
-            <div className={ModalStyles.modal}>
+            <div className={ModalStyles.modal} data-testid="modal">
               <div className={ModalStyles.title}>
                 <span className="text text_type_main-large">{title}</span>
-                <div className={ModalStyles.close}>
+                <div className={ModalStyles.close} data-testid="close">
                   <CloseIcon type={"primary"} onClick={onClose} />
                 </div>
               </div>

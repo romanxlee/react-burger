@@ -17,7 +17,7 @@ export const Feed = () => {
   const [order, setOrder] = useState<FeedOrder>();
 
   useEffect(() => {
-    dispatch(connectFeed("ws://norma.nomoreparties.space/orders/all"));
+    dispatch(connectFeed("wss://norma.nomoreparties.space/orders/all"));
 
     return () => {
       dispatch(disconnectFeed());
@@ -25,13 +25,13 @@ export const Feed = () => {
   }, []);
 
   const handleClick = (item: FeedOrder) => {
-    window.history.pushState(null, "Stellar Burgers", `feed/${item.number}`);
+    window.history.pushState(null, "Stellar Burgers", `#/feed/${item.number}`);
     setOrder(item);
     openModal();
   };
 
   const handleClose = () => {
-    window.history.pushState(null, "Stellar Burgers", `/feed`);
+    window.history.pushState(null, "Stellar Burgers", `#/feed`);
     closeModal();
   };
 

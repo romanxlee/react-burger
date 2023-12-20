@@ -30,14 +30,14 @@ export const BurgerIngredients = () => {
     window.history.pushState(
       null,
       "Stellar Burgers",
-      `ingredients/${value._id}`,
+      `#/ingredients/${value._id}`,
     );
     openModal();
     dispatch(setCurrentIngredient(value));
   };
 
   const handleClose = () => {
-    window.history.pushState(null, "Stellar Burgers", `/`);
+    window.history.pushState(null, "Stellar Burgers", `#/`);
     dispatch(unsetCurrentIngredient());
     closeModal();
   };
@@ -85,11 +85,12 @@ export const BurgerIngredients = () => {
         <section className={BurgerIngredientsStyles.section}>
           <h4 className="text text_type_main-medium">Булки</h4>
           <div className={BurgerIngredientsStyles.container}>
-            {BUNS.map((bun) => (
+            {BUNS.map((bun, index) => (
               <IngredientCard
                 key={bun._id}
                 ingredient={bun}
                 onCLick={() => handleClick(bun)}
+                testId={`bun-${index}`}
               />
             ))}
           </div>
@@ -98,11 +99,12 @@ export const BurgerIngredients = () => {
         <section className={BurgerIngredientsStyles.section}>
           <h4 className="text text_type_main-medium">Соусы</h4>
           <div className={BurgerIngredientsStyles.container}>
-            {SAUCES.map((sauce) => (
+            {SAUCES.map((sauce, index) => (
               <IngredientCard
                 key={sauce._id}
                 ingredient={sauce}
                 onCLick={() => handleClick(sauce)}
+                testId={`sauce-${index}`}
               />
             ))}
           </div>
@@ -111,11 +113,12 @@ export const BurgerIngredients = () => {
         <section className={BurgerIngredientsStyles.section}>
           <h4 className="text text_type_main-medium">Начинки</h4>
           <div className={BurgerIngredientsStyles.container}>
-            {MAINS.map((main) => (
+            {MAINS.map((main, index) => (
               <IngredientCard
                 key={main._id}
                 ingredient={main}
                 onCLick={() => handleClick(main)}
+                testId={`main-${index}`}
               />
             ))}
           </div>
